@@ -4,6 +4,12 @@
 ## merge, split, clean and utilize fasta files in other go programs.
 
 
+goal:
+	have an executable file that can be compiled and used without a need to touch
+	the internals, and also a package that can be imported elsewhere and provide 
+	several simple commands for interacting with fasta files.
+
+
 first:
 - go through and assemble the read and write functions for the fasta package
 
