@@ -4,6 +4,11 @@
 ## merge, split, clean and utilize fasta files in other go programs.
 
 
+first:
+- go through and assemble the read and write functions for the fasta package
+
+
+
 to do:
 
 from cmd line:
