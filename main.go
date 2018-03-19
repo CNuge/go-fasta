@@ -17,5 +17,8 @@ func main(){
 		// -m merge (multiple, output file name)
 		// -s split (sinlge, output file names == fasta names)
 
+		// option to specify output filename if want it to be different from
+		// the default
+
 
 }

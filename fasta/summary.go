@@ -1,4 +1,10 @@
+package fasta
 
+import(
+	"fmt"
+	"os"
+
+)
 
 type summaryDat struct{
 	name string
@@ -29,9 +35,6 @@ func (sq seq) percGC() float64 {
 }
 
 
-// have the default output be just to io, but give the option to pass in a file
-// name and have the program write to a file
-
 // get an output slice containing the summaryDat for each of the sequences
 func Summary(fa *Fasta) []summaryDat {
 	output = []summaryDat{}
@@ -42,3 +45,30 @@ func Summary(fa *Fasta) []summaryDat {
 		}
 	return output
 }
+
+
+// a wrapper function to write the output summary to a file
+func WriteSummary(fa *Fasta, filename string) string {
+	if filename == nil {
+		filename = "summary.tsv"
+	}
+
+	sum_data = Summary(fa)
+	sum_string = "Name\tLen\tPerc_GC\n"
+	for _ , row := range(sum_data){
+		row_string = fmt.Sprintf("%v", row)
+		sum_string = append(sum_string, row_string)
+	}
+
+	f, err := os.Create(filename)
+	defer f.Close()
+
+
+
+}
+
+
+
+
+
+
