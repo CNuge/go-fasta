@@ -1,9 +1,15 @@
+//problem note - the WriteSummary currently builds the whole string in memory 
+// and then writes it to the file
+// this is inefficient, especially once files get large
+// find a way to make the strings for each line and write them to the file on the fly
+
+
 package fasta
 
 import(
 	"fmt"
 	"os"
-
+	"io"
 )
 
 type summaryDat struct{
@@ -48,7 +54,7 @@ func Summary(fa *Fasta) []summaryDat {
 
 
 // a wrapper function to write the output summary to a file
-func WriteSummary(fa *Fasta, filename string) string {
+func WriteSummary(fa *Fasta, filename string)  {
 	if filename == nil {
 		filename = "summary.tsv"
 	}
@@ -61,11 +67,44 @@ func WriteSummary(fa *Fasta, filename string) string {
 	}
 
 	f, err := os.Create(filename)
+	if err != nil {
+		panic(err)
+	}
+
+	defer f.Close()
+
+	_, err := f.WriteString(sum_string)
+	if err != nil {
+		panic(err)
+	}	
+}
+
+/* on the fly alternative:
+
+	f, err := os.Create(filename)
+	if err != nil {
+		panic(err)
+	}
 	defer f.Close()
 
 
+	sum_data = Summary(fa)
+	header_string = "Name\tLen\tPerc_GC\n"
+	_, err := f.WriteString(header_string)
+	if err != nil {
+		panic(err)
+	}	
 
-}
+	for _ , row := range(sum_data){
+		row_string = fmt.Sprintf("%v", row)
+	
+		_, err := f.WriteString(row_string)
+		if err != nil {
+			panic(err)
+		}	
+
+	}
+*/
 
 
 
