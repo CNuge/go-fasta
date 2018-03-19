@@ -34,8 +34,6 @@ func (sq seq) len() int {
 }
 
 
-//TODO - need to print the sq.sequence with line breaks and spaces in it!
-
 // the function to return the sequence in fasta format when printed
 func (sq seq) String() string {
 	return fmt.Sprintf(">%v\n%v\n", sq.name, sq.sequence)
