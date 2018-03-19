@@ -66,6 +66,17 @@ func Read(filename string) Fasta {
 //		- determine the desired number of nucleotides per line and the breakpoints
 //		- code in a for loop to pretty write the sequences to file
 
+func (sq seq) PrettyString() string {
+	outstring := fmt.Sprint(">%v\n", sq.name)
+
+	//for loop through the sq.sequence
+		// every 10 bp put a space,
+		// every 60 basepairs put a newline
+		// end with a newline
+
+	// change the stringer to do the every 10 newline
+	return 
+}
 
 func Write(fa *Fasta, filename string ) {
 
@@ -84,8 +95,6 @@ func Write(fa *Fasta, filename string ) {
 }
 
 /*
-
-
 
 	sum_data = Summary(fa)
 	header_string = "Name\tLen\tPerc_GC\n"
