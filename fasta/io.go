@@ -65,3 +65,42 @@ func Read(filename string) Fasta {
 //TODO - need to print the sq.sequence with line breaks and spaces in it!
 //		- determine the desired number of nucleotides per line and the breakpoints
 //		- code in a for loop to pretty write the sequences to file
+
+
+func Write(fa *Fasta, filename string ) {
+
+	// accepts any filename, if none given
+	if filename == nil {
+		filename = "output.fasta"
+	}
+
+	f, err := os.Create(filename)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+
+}
+
+/*
+
+
+
+	sum_data = Summary(fa)
+	header_string = "Name\tLen\tPerc_GC\n"
+	_, err := f.WriteString(header_string)
+	if err != nil {
+		panic(err)
+	}	
+
+	for _ , row := range(sum_data){
+		row_string = fmt.Sprintf("%v", row)
+	
+		_, err := f.WriteString(row_string)
+		if err != nil {
+			panic(err)
+		}	
+
+	}
+*/

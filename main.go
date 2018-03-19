@@ -21,4 +21,10 @@ func main(){
 		// the default
 
 
+
+	// for the split, have it take a list fasta struct, and split each member of 
+	// the fasta into its own fasta struct, then take this and write each to a file
+	// using the fasta.Write() function with the name of the sequence + ".fasta"
+	// passed in as the second name.
+
 }

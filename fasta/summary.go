@@ -12,7 +12,7 @@ import(
 	"io"
 )
 
-type summaryDat struct{
+type summaryDat struct {
 	name string
 	length int
 	gc int
@@ -54,7 +54,7 @@ func Summary(fa *Fasta) []summaryDat {
 
 
 // a wrapper function to write the output summary to a file
-func WriteSummary(fa *Fasta, filename string)  {
+func WriteSummary(fa *Fasta, filename string) {
 	if filename == nil {
 		filename = "summary.tsv"
 	}
