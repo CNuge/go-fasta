@@ -36,7 +36,7 @@ for the fasta package:
 - fasta.Merge()
 - fasta.Split()
 - fasta.Sort() - take multiple sequences in a fasta.File struct and sort them
-- fasta.Summary() - get a 
+- fasta.Summary() - get a summary table with GC count and nucleotide count for all sequences in a file
 
 - special fasta.Seq and fasta.File structures.
 - sequences are
