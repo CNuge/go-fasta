@@ -19,6 +19,18 @@ func (sq seq) String() string {
 	return fmt.Sprintf(">%v\n%v\n", sq.name, sq.sequence)
 }
 
+// for print to file introduce newlines
+func (sq seq) fileString() string {
+	outstring := fmt.Sprintf(">%v\n", sq.name)
+
+	for i = 0 ; i <= len(sq.sequence), i = i + 60 {
+		line = fmt.Sprintf("%v\n", sq.sequence[i:i+60])		
+		outstring = append(outstring, line)
+
+	}
+	return outstring
+}
+
 
 // represent a list of sequences
 type Fasta struct {
@@ -60,35 +72,6 @@ func Read(filename string) Fasta {
 	return fileseqs
 }
 
-
-//Write fasta
-//TODO - need to print the sq.sequence with line breaks and spaces in it!
-//		- determine the desired number of nucleotides per line and the breakpoints
-//		- code in a for loop to pretty write the sequences to file
-
-func (sq seq) PrettyString() string {
-	outstring := fmt.Sprint(">%v\n", sq.name)
-
-	for i = 10 ; i <= len(sq.sequence), i = i + 10{
-		// if i + 10 greater then length, change the back side of window to len(sq.sequence)
-
-		// if 10/60 has no remainder, append a newline
-		
-		// else append a space
-
-		// append whole string to outstring
-
-	}
-	
-	//for loop through the sq.sequence
-		// every 10 bp put a space,
-		// every 60 basepairs put a newline
-		// end with a newline
-	// need to make it stop and provide the end of the sequence if not multiple of 10
-
-	// change the stringer to do the every 10 newline
-	return 
-}
 
 func Write(fa *Fasta, filename string ) {
 
