@@ -25,7 +25,7 @@ type Fasta struct {
 	entries []seq
 }
 
-func (fa *Fasta) String() string {
+func (fa Fasta) String() string {
 	outstring := ""
 	for _, s := range fa.entries {
 		outstring = fmt.Sprintf("%v%v", outstring, s.String())
@@ -111,5 +111,7 @@ func (fa *Fasta) Write(filename string) {
 // run that youre unsure on
 func main(){
 	test := Read("./example_data/example1.fasta")
-	fmt.Println(test)
+	fmt.Println(test)	
+	fmt.Println(test.String())
+	fmt.Println(test.entries[1].String())
 }

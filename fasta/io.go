@@ -7,6 +7,8 @@ replace the code once it is debugged!
 
 
 package fasta
+
+
 import (
 	"fmt"
 	"log"       // for logging errors
@@ -32,7 +34,7 @@ type Fasta struct {
 	entries []seq
 }
 
-func (fa *Fasta) String() string {
+func (fa Fasta) String() string {
 	outstring := ""
 	for _, s := range fa.entries {
 		outstring = fmt.Sprintf("%v%v", outstring, s.String())
