@@ -1,7 +1,3 @@
-//problem note - the WriteSummary currently builds the whole string in memory
-// and then writes it to the file
-// this is inefficient, especially once files get large
-// find a way to make the strings for each line and write them to the file on the fly
 
 package fasta
 
