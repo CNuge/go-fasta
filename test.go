@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil" //input/output utilities https://golang.org/pkg/io/ioutil/
 	"log"       // for logging errors
 	"strings"
+	"os"
+	"io/ioutil" //input/output utilities https://golang.org/pkg/io/ioutil/
 )
+
 
 // represent a single sequence
 type seq struct {
@@ -71,13 +73,14 @@ func (sq seq) fileString() string {
 	outstring := fmt.Sprintf(">%v\n", sq.name)
 	for i := 0; i <= len(sq.sequence); i = i + 60 {
 		// check if we have reached the end of the sequence
+		var back int
 		if i+60 > len(sq.sequence) {
-			back := len(sq.sequence)
+			back = len(sq.sequence)
 		} else {
-			back := i + 60
+			back = i + 60
 		}
 
-		line = fmt.Sprintf("%v\n", sq.sequence[i:back])
+		line := fmt.Sprintf("%v\n", sq.sequence[i:back])
 		outstring = fmt.Sprintf("%v%v", outstring, line)
 
 	}
@@ -87,7 +90,7 @@ func (sq seq) fileString() string {
 func (fa *Fasta) Write(filename string) {
 
 	// accepts any filename, if none given
-	if filename == nil {
+	if filename == "" {
 		filename = "output.fasta"
 	}
 
@@ -107,6 +110,6 @@ func (fa *Fasta) Write(filename string) {
 // use this file if there is a particular piece of code you need to see 
 // run that youre unsure on
 func main(){
-	test := Read('./example_data/example1.fasta')
+	test := Read("./example_data/example1.fasta")
 	fmt.Println(test)
 }
