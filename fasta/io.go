@@ -19,22 +19,18 @@ func (sq seq) String() string {
 	return fmt.Sprintf(">%v\n%v\n", sq.name, sq.sequence)
 }
 
-// for print to file introduce newlines
-func (sq seq) fileString() string {
-	outstring := fmt.Sprintf(">%v\n", sq.name)
 
-	for i = 0 ; i <= len(sq.sequence), i = i + 60 {
-		line = fmt.Sprintf("%v\n", sq.sequence[i:i+60])		
-		outstring = append(outstring, line)
-
-	}
-	return outstring
-}
-
-
-// represent a list of sequences
+// represent a list of sequences as a Fasta
 type Fasta struct {
 	entries []seq
+}
+
+func (fa *Fasta) String() string {
+	outstring := ""
+	for _ , s := range fa.entries {
+		outstring = append(outstring, s.String())
+	}
+	return outstring
 }
 
 // add a seq struct instance to the fasta struct
@@ -73,6 +69,26 @@ func Read(filename string) Fasta {
 }
 
 
+// print a sequence in fasta fmt with newline characters
+// after every 60 nucleotides
+func (sq seq) fileString() string {
+	outstring := fmt.Sprintf(">%v\n", sq.name)
+	for i = 0 ; i <= len(sq.sequence), i = i + 60 {
+		// check if we have reached the end of the sequence
+		if i+60 > len(sq.sequence) {
+			back := len(sq.sequence) 
+		} else {
+			back := i+60
+		}
+
+		line = fmt.Sprintf("%v\n", sq.sequence[i : back])		
+		outstring = append(outstring, line)
+
+	}
+	return outstring
+}
+
+
 func Write(fa *Fasta, filename string ) {
 
 	// accepts any filename, if none given
@@ -86,9 +102,10 @@ func Write(fa *Fasta, filename string ) {
 	}
 	defer f.Close()
 
-	// loop through all of the seq structs in the fasta,
-		// send each one to the PrettyString() and then write the string to the file
-
+	for _ , s := range fa.entries {
+		// get string with newlines and write to file
+		f.WriteString(s.fileString())
+	} 
 }
 
 /*

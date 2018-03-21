@@ -59,23 +59,22 @@ func WriteSummary(fa *Fasta, filename string) {
 		filename = "summary.tsv"
 	}
 
-	sum_data = Summary(fa)
-	sum_string = "Name\tLen\tPerc_GC\n"
-	for _ , row := range(sum_data){
-		row_string = fmt.Sprintf("%v", row)
-		sum_string = append(sum_string, row_string)
-	}
-
 	f, err := os.Create(filename)
 	if err != nil {
 		panic(err)
 	}
-
 	defer f.Close()
 
-	_, err := f.WriteString(sum_string)
-	if err != nil {
-		panic(err)
+	// get the summary data
+	sum_data = Summary(fa)
+	// write header to file
+	header_string = "Name\tLen\tPerc_GC\n"
+	f.WriteString(header_string)
+
+	// iterate through the rows of the summary table
+	// write the data to file in .tsv fmt
+	for _ , row := range(sum_data){
+		f.WriteString(row.String())
 	}	
 }
 
