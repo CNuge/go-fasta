@@ -11,12 +11,11 @@ package fasta
 
 import (
 	"fmt"
-	"log"       // for logging errors
-	"strings"
-	"os"
 	"io/ioutil" //input/output utilities https://golang.org/pkg/io/ioutil/
+	"log"       // for logging errors
+	"os"
+	"strings"
 )
-
 
 // represent a single sequence
 type seq struct {
@@ -114,4 +113,5 @@ func (fa *Fasta) Write(filename string) {
 		f.WriteString(s.fileString())
 	}
 }
+
 

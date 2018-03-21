@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-	"log"       // for logging errors
-	"strings"
-	"os"
 	"io/ioutil" //input/output utilities https://golang.org/pkg/io/ioutil/
+	"log"       // for logging errors
+	"os"
+	"strings"
 )
-
 
 // represent a single sequence
 type seq struct {
@@ -106,12 +105,11 @@ func (fa *Fasta) Write(filename string) {
 	}
 }
 
-
-// use this file if there is a particular piece of code you need to see 
+// use this file if there is a particular piece of code you need to see
 // run that youre unsure on
-func main(){
+func main() {
 	test := Read("./example_data/example1.fasta")
-	fmt.Println(test)	
+	fmt.Println(test)
 	fmt.Println(test.entries[1])
 
 	test.Write("test_output.fasta")
