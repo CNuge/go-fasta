@@ -95,10 +95,12 @@ func (sq seq) fileString() string {
 	return outstring
 }
 
-func (fa *Fasta) Write(filename string) {
-
-	// accepts any filename, if none given
-	if filename == "" {
+func (fa *Fasta) Write(file ...string) {
+	filename := ""
+	// accepts filename, if none given makes it default
+	if len(file) > 0 {
+		filename = file[0]
+	} else {
 		filename = "output.fasta"
 	}
 
