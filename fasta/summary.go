@@ -14,7 +14,7 @@ import (
 type summaryDat struct {
 	name   string
 	length int
-	gc     int
+	gc     float64
 }
 
 // represent the summary data structures for printing
@@ -29,30 +29,40 @@ func (sq seq) len() int {
 
 // gc content of a seq
 func (sq seq) percGC() float64 {
-	bp := len(sq.sequence)
+	bp := 0
 	gc := 0
+	// below we check to make sure the bases are ATGC 
+	// to skip the N on the GC count
 	for _, base := range sq.sequence {
 		if base == 'G' || base == 'C' {
+			bp++
 			gc++
+		} else if base == 'A' || base == 'T'{
+			bp++
 		}
+
 	}
 	return float64(gc) / float64(bp) * 100.0
 }
 
 // get an output slice containing the summaryDat for each of the sequences
-func Summary(fa *Fasta) []summaryDat {
-	output = []summaryDat{}
+func (fa Fasta) Summary() []summaryDat {
+	output := []summaryDat{}
 	// iterate through the entries in the fasta structure
 	for _, entry := range fa.entries {
-		data := summaryDat{name: entry.name, len(entry), percGC(entry)}
+		data := summaryDat{ entry.name, entry.len(), entry.percGC()}
 		output = append(output, data)
 	}
 	return output
 }
 
 // a wrapper function to write the output summary to a file
-func WriteSummary(fa *Fasta, filename string) {
-	if filename == nil {
+func (fa Fasta) WriteSummary(file ...string) {
+	filename := ""
+	
+	if len(file) > 0 {
+		filename = file[0]
+	} else {
 		filename = "summary.tsv"
 	}
 
@@ -63,9 +73,9 @@ func WriteSummary(fa *Fasta, filename string) {
 	defer f.Close()
 
 	// get the summary data
-	sum_data = Summary(fa)
+	sum_data := fa.Summary()
 	// write header to file
-	header_string = "Name\tLen\tPerc_GC\n"
+	header_string := "Name\tLen\tPerc_GC\n"
 	f.WriteString(header_string)
 
 	// iterate through the rows of the summary table
@@ -74,6 +84,7 @@ func WriteSummary(fa *Fasta, filename string) {
 		f.WriteString(row.String())
 	}
 }
+
 
 /* on the fly alternative:
 
