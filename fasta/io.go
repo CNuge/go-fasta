@@ -1,3 +1,11 @@
+/*
+this file is in the test.go file one level up
+
+replace the code once it is debugged!
+
+*/
+
+
 package fasta
 
 import (
