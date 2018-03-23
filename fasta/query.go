@@ -11,10 +11,75 @@ package fasta
 // base url:
 fetch := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
 
+fa_extension := "&rettype=fasta"
+
 
 /*
+
 Required Parameters
 db
+
+?db=
+
+
+&rettype=fasta
+
+
+
+
+efetch.fcgi?db=database&id=uid1,uid2,uid3&rettype=report_type&retmode=data_mode
+elink.fcgi?dbfrom=initial_databasedb=target_database&id=uid1,uid2,uid3
+
+*/
+
+
+
+/*
+
+database_options:
+
+Entrez_Database	UID_common_name	E-utility_Database_Name
+BioProject	BioProject ID	bioproject
+BioSample	BioSample ID	biosample
+Biosystems	BSID	biosystems
+Books	Book ID	books
+Conserved Domains	PSSM-ID	cdd
+dbGaP	dbGaP ID	gap
+dbVar	dbVar ID	dbvar
+Epigenomics	Epigenomics ID	epigenomics
+EST	GI number	nucest
+Gene	Gene ID	gene
+Genome	Genome ID	genome
+GEO Datasets	GDS ID	gds
+GEO Profiles	GEO ID	geoprofiles
+GSS	GI number	nucgss
+HomoloGene	HomoloGene ID	homologene
+MeSH	MeSH ID	mesh
+NCBI C++ Toolkit	Toolkit ID	toolkit
+NCBI Web Site	Web Site ID	ncbisearch
+NLM Catalog	NLM Catalog ID	nlmcatalog
+Nucleotide	GI number	nuccore
+OMIA	OMIA ID	omia
+PopSet	PopSet ID	popset
+Probe	Probe ID	probe
+Protein	GI number	protein
+Protein Clusters	Protein Cluster ID	proteinclusters
+PubChem BioAssay	AID	pcassay
+PubChem Compound	CID	pccompound
+PubChem Substance	SID	pcsubstance
+PubMed	PMID	pubmed
+PubMed Central	PMCID	pmc
+SNP	rs number	snp
+SRA	SRA ID	sra
+Structure	MMDB-ID	structure
+Taxonomy	TaxID	taxonomy
+UniGene	UniGene Cluster ID	unigene
+UniSTS	STS ID	unists
+
+
+
+
+
 Database from which to retrieve records. 
 The value must be a valid Entrez database name (default = pubmed). 
 Currently EFetch does not support all Entrez databases. 
@@ -50,7 +115,10 @@ such as plain text, HMTL or XML. See Table 1 for a full list of allowed values f
 each database.
 
 rettype
-Retrieval type. This parameter specifies the record view returned, such as Abstract or MEDLINE from PubMed, or GenPept or FASTA from protein. Please see Table 1 for a full list of allowed values for each database.
+Retrieval type. This parameter specifies the record view returned, 
+such as Abstract or MEDLINE from PubMed, or GenPept or FASTA from protein. 
+Please see Table 1 for a full list of allowed values for each database.
 
+FASTA	fasta	text
 
 */
