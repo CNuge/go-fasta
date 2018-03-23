@@ -2,7 +2,8 @@ package fasta
 
 // this file contains the code for interacting with NCBI 
 // and downloding a fasta sequence for a provided accession number
-// 
+// the downloaded sequences can be loaded into a Fasta struct, or 
+// printed directly to a file
 
 import(
     "fmt"
