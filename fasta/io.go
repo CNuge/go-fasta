@@ -1,13 +1,7 @@
-/*
-this file is in the test.go file one level up
-
-replace the code once it is debugged!
-
-*/
-
-
 package fasta
 
+// contains code for seq and fasta structures
+// along with associated input/output methods
 
 import (
 	"fmt"

@@ -29,6 +29,15 @@ func main(){
 			// take a list of files space delimited (or a .txt with filenames within)
 			// merge them and write to -f or default name
 
+			// this is done by:
+				// parsing the filnames,
+				// read in the first file with Read
+
+				// for subsequent files, read in with Read, then append then iterate through their
+				// Fasta struct and use AddItem to add all the seq to the first Fasta struct
+
+				// take the large Fasta struct and Write it to -f
+
 		// -d split (single, output file names == fasta names)
 
 			// for the split, have it take a list fasta struct, and split each member of 

@@ -91,7 +91,7 @@ func QueryToFile(accession UID, output string) error {
     } 
     defer resp.Body.Close()
 
-    // Write data to file
+    // Write data direct to file
     _, err = io.Copy(out, resp.Body)
     if err != nil {
         return err
