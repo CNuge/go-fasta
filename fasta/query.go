@@ -10,12 +10,23 @@ package fasta
 
 // base url:
 fetch := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
+
+//
 db := "?db="
 // then fill in and add the db
-id_base := "&id="
-// then a comma delimited list of files
-fa_ext := "&rettype=fasta"
 
+id_base := "&id="
+// then a comma delimited list of unique ids
+
+// this says we want a fasta in text mode
+fa_ext := "&rettype=fasta&retmode=text"
+
+
+// as a test try to get these small charr sequences
+// AY677181.1, in the nuccore db, 
+test1 := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AY677181.1&rettype=fasta&retmode=text"
+// AY646679.1
+// AF298042.1
 
 /*
 
