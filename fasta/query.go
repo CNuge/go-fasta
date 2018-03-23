@@ -1,12 +1,52 @@
 package fasta
 
+import(
+	"fmt"
+	"net/http"
+)
+
+
+
+func buildURL(UID ... string) string {
+	url_front := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="
+    
+    // build the middle of the url from the input slice
+    url_middle := ""
+    for _, i := range UID{
+        url_middle = Sprintf("%v,%v", url_middle, i)
+    }
+	
+    url_end := "&rettype=fasta&retmode=text"
+
+    url := []string{url_front, url_middle, url_end}
+
+    return strings.Join(url, "")
+
+}
+
+
+// take the query unique IDs and write them to the output fasta
+func Query( UID ... string ) {
+
+    query_url := buildURL(UID)
+
+    response, err := http.Get(query_url)
+    if err != nil {
+            log.Fatal(err)
+    } else {
+        fmt.Println(response)
+    }
+}
+
+
+
+
+
+
+/*
+
 // take an accession number, query NCBI and then return and use the data
 // treat the return from NCBI like a file, send it to
-
-
-
-// this is done using eutils - get a sense of the parts of the records needed
-// https://www.ncbi.nlm.nih.gov/books/NBK25500/#chapter1.Downloading_Full_Records
 
 // base url:
 fetch := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
@@ -23,22 +63,42 @@ fa_ext := "&rettype=fasta&retmode=text"
 
 
 // as a test try to get these small charr sequences
-// AY677181.1, in the nuccore db, 
-test1 := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=AY677181.1&rettype=fasta&retmode=text"
+// AY677181.1, in the nucleotide db, 
+test1 := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=AY677181.1&rettype=fasta&retmode=text"
+// this is chr 1 from the genome, also a nucleotide db query
+test2 := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=NC_036838.1&rettype=fasta&retmode=text"
+
 // AY646679.1
 // AF298042.1
+// NC_036838.1 chr one of genome
+
+// make nucleotide the default, have option to switch to
+// protein
+// AQV08101.1
+// both of the below work... can all protein sequences be queried through the nucleotide url?
+test3 := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=protein&id=AQV08101.1&rettype=fasta&retmode=text"
+test4 := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=AQV08101.1&rettype=fasta&retmode=text"
+
+//  AFF19513.2 <- a protein, but below the query to the nucleotide works fine
+test4 := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=AFF19513.2&rettype=fasta&retmode=text"
+*/
 
 /*
+// this is done using eutils - get a sense of the parts of the records needed
+// https://www.ncbi.nlm.nih.gov/books/NBK25500/#chapter1.Downloading_Full_Records
+// here are the components we need
+
+Required Parameters
 
 db - say if we are grabbing this from bioproject, biosample etc.
 id - this is the id param (can pass in a comma delimited list, look at fmt options)
 fasta - fa_extension to say we want a fasta returned
+retmode - return mode - do you want a text or xml file
 
-Required Parameters
-db
+
+
 
 ?db=
-
 
 &rettype=fasta
 
@@ -48,6 +108,7 @@ ID types - how can we get an id number
 ID must me a UID:
 unique record identifier (UID), 
 that unambiguously differentiates the record from all other records in the database.
+
 
 
 efetch.fcgi?db=database&id=uid1,uid2,uid3&rettype=report_type&retmode=data_mode
@@ -62,6 +123,10 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=nucleotide&id=288
 
 
 /*
+
+Nucleotide	GI number	nuccore
+
+
 
 database_options:
 
