@@ -1,5 +1,7 @@
-
 package fasta
+
+// this contains the code for making a summary report of a fasta file
+// a summary struct can be generated, or written to an output file
 
 import (
 	"fmt"

@@ -1,5 +1,9 @@
 package fasta
 
+// this file contains the code for interacting with NCBI 
+// and downloding a fasta sequence for a provided accession number
+// 
+
 import(
     "fmt"
     "net/http"
@@ -33,8 +37,22 @@ func buildURL(accession UID) string {
 }
 
 
+func fastaFromQuery(raw_data string) Fasta {
+    // parse data to string, pass to parser
+    fileseqs := Fasta{} 
+    // split the input file on the new seq characters
+    data := strings.Split(raw_data, ">")
+    // the first position is empty because of the leading >
+    // so we iterate from 1:end and get the sequence
+    // here we parse the fasta and add it to the slice of seq
+    for _, entry := range data[1:] {
+        fileseqs.AddItem(ParseFasta(entry))
+    }
+    return fileseqs
+}
+
 // take the query unique IDs and get string response
-func Query(accession UID) seq {
+func Query(accession UID) Fasta {
     //construct the url
     query_url := buildURL(accession)
     
@@ -48,8 +66,8 @@ func Query(accession UID) seq {
     // the the response data to variable
     body, err := ioutil.ReadAll(resp.Body)
 
-    // parse data to string, pass to parser
-    return ParseFasta(string(body))
+    // parse response body to a fasta structure
+    return fastaFromQuery(string(body))
 
 }
 
