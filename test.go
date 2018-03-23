@@ -4,17 +4,24 @@ package main
 import(
 	"fmt"
 	"net/http"
+	"strings"
+	"log"
+	"io/ioutil"
 )
 
 
+type UID struct {
+	all []string
+}
 
-func buildURL(UID ... string) string {
+
+func (accession UID) buildURL() string {
 	url_front := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="
     
     // build the middle of the url from the input slice
     url_middle := ""
-    for _, i := range UID{
-        url_middle = Sprintf("%v,%v", url_middle, i)
+    for _, i := range accession.all {
+        url_middle = fmt.Sprintf("%v,%v", url_middle, i)
     }
 	
     url_end := "&rettype=fasta&retmode=text"
@@ -27,21 +34,28 @@ func buildURL(UID ... string) string {
 
 
 // take the query unique IDs and write them to the output fasta
-func Query( UID ... string ) {
+func (accession UID) Query() string {
 
-    query_url := buildURL(UID)
+    query_url := accession.buildURL()
 
-    response, err := http.Get(query_url)
+    resp, err := http.Get(query_url)
     if err != nil {
             log.Fatal(err)
-    } else {
-        return response
-    }
+    } 
+		
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	return string(body)
+
 }
 
 
 
 func main() {
-	fmt.Println(Query("AY646679.1"))
-	list_of_ids := []string{"AY646679.1", "AF298042.1"}
+	single := UID{[]string{"AY646679.1"}}
+	out1 := single.Query()
+	fmt.Println(out1)
+	list_of_ids := UID{[]string{"AY646679.1", "AF298042.1"}}
+	out2 := list_of_ids.Query()
+	fmt.Println(out2)
 }

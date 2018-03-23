@@ -1,21 +1,28 @@
 package fasta
 
 import(
-	"fmt"
-	"net/http"
+    "fmt"
+    "net/http"
+    "strings"
+    "log"
+    "io/ioutil"
 )
 
 
+type UID struct {
+    all []string
+}
 
-func buildURL(UID ... string) string {
-	url_front := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="
+
+func (accession UID) buildURL() string {
+    url_front := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="
     
     // build the middle of the url from the input slice
     url_middle := ""
-    for _, i := range UID{
-        url_middle = Sprintf("%v,%v", url_middle, i)
+    for _, i := range accession.all {
+        url_middle = fmt.Sprintf("%v,%v", url_middle, i)
     }
-	
+    
     url_end := "&rettype=fasta&retmode=text"
 
     url := []string{url_front, url_middle, url_end}
@@ -25,17 +32,20 @@ func buildURL(UID ... string) string {
 }
 
 
-// take the query unique IDs and write them to the output fasta
-func Query( UID ... string ) {
+// take the query unique IDs and get string response
+func (accession UID) Query() string {
 
-    query_url := buildURL(UID)
+    query_url := accession.buildURL()
 
-    response, err := http.Get(query_url)
+    resp, err := http.Get(query_url)
     if err != nil {
             log.Fatal(err)
-    } else {
-        fmt.Println(response)
-    }
+    } 
+        
+    defer resp.Body.Close()
+    body, err := ioutil.ReadAll(resp.Body)
+    return string(body)
+
 }
 
 
@@ -43,7 +53,6 @@ func Query( UID ... string ) {
 
 
 
-/*
 
 // take an accession number, query NCBI and then return and use the data
 // treat the return from NCBI like a file, send it to
@@ -81,7 +90,7 @@ test4 := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotid
 
 //  AFF19513.2 <- a protein, but below the query to the nucleotide works fine
 test4 := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=AFF19513.2&rettype=fasta&retmode=text"
-*/
+
 
 /*
 // this is done using eutils - get a sense of the parts of the records needed
