@@ -21,10 +21,7 @@ func main(){
 			// take either one string, multiple space delimited string or a text file
 			// parse the above into a slice of accession numbers, query NCBI for the accession numbers
 		
-		// -f if passed, change the output file names 
-			// for instance of both a .fasta and a summary, 
-			// take this name and split on a . , take the first bit and append .fasta and .txt to it and use accordingly
-		
+
 		// -m merge (multiple, output file name)
 			// take a list of files space delimited (or a .txt with filenames within)
 			// merge them and write to -f or default name
@@ -44,5 +41,15 @@ func main(){
 			// the fasta into its own fasta struct, then take this and write each to a file
 			// using the fasta.Write() function with the name of the sequence + ".fasta"
 			// passed in as the second name.
+
+			// this is done by:
+				// Read to access all the data in the file
+				// for each seq in the Fasta struct, make a new Fasta struct and
+				// call Write() pass in the seq.name + ".fasta" as the output name for each 
+
+		// -f if passed, change the output file names 
+			// for instance of both a .fasta and a summary, 
+			// take this name and split on a . , take the first bit and append .fasta and .txt to it and use accordingly
+		
 
 }
