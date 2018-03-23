@@ -79,10 +79,6 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=nucleotide&id=288
 
 /*
 
-Nucleotide	GI number	nuccore
-
-
-
 database_options:
 
 Entrez_Database	UID_common_name	E-utility_Database_Name
@@ -122,8 +118,6 @@ Structure	MMDB-ID	structure
 Taxonomy	TaxID	taxonomy
 UniGene	UniGene Cluster ID	unigene
 UniSTS	STS ID	unists
-
-
 
 
 
