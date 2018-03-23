@@ -6,6 +6,8 @@ import(
     "strings"
     "log"
     "io/ioutil"
+    "os"
+    "io"
 )
 
 
@@ -13,8 +15,7 @@ type UID struct {
     all []string
 }
 
-
-func (accession UID) buildURL() string {
+func buildURL(accession UID) string {
     url_front := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="
     
     // build the middle of the url from the input slice
@@ -33,23 +34,52 @@ func (accession UID) buildURL() string {
 
 
 // take the query unique IDs and get string response
-func (accession UID) Query() string {
-
-    query_url := accession.buildURL()
-
+func Query(accession UID) seq {
+    //construct the url
+    query_url := buildURL(accession)
+    
+    // make the http request
     resp, err := http.Get(query_url)
     if err != nil {
             log.Fatal(err)
-    } 
-        
+    }        
     defer resp.Body.Close()
+
+    // the the response data to variable
     body, err := ioutil.ReadAll(resp.Body)
-    return string(body)
+
+    // parse data to string, pass to parser
+    return ParseFasta(string(body))
 
 }
 
 
+func QueryToFile(accession UID, output string) error {
+    // construct the url
+    query_url := buildURL(accession)
 
+    //make the file
+    out, err := os.Create(output)    
+    if err != nil {
+        return err
+    }
+    defer out.Close()
+
+    // make the http request
+    resp, err := http.Get(query_url)
+    if err != nil {
+            log.Fatal(err)
+    } 
+    defer resp.Body.Close()
+
+    // Write data to file
+    _, err = io.Copy(out, resp.Body)
+    if err != nil {
+        return err
+    }
+
+    return nil
+}
 
 
 
