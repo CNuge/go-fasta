@@ -10,11 +10,18 @@ package fasta
 
 // base url:
 fetch := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
-
-fa_extension := "&rettype=fasta"
+db := "?db="
+// then fill in and add the db
+id_base := "&id="
+// then a comma delimited list of files
+fa_ext := "&rettype=fasta"
 
 
 /*
+
+db - say if we are grabbing this from bioproject, biosample etc.
+id - this is the id param (can pass in a comma delimited list, look at fmt options)
+fasta - fa_extension to say we want a fasta returned
 
 Required Parameters
 db
@@ -24,11 +31,20 @@ db
 
 &rettype=fasta
 
-
+ID types - how can we get an id number
+	GenBank-Accn	RefSeq-Accn
+	CM009399.1		NC_036838.1
+ID must me a UID:
+unique record identifier (UID), 
+that unambiguously differentiates the record from all other records in the database.
 
 
 efetch.fcgi?db=database&id=uid1,uid2,uid3&rettype=report_type&retmode=data_mode
 elink.fcgi?dbfrom=initial_databasedb=target_database&id=uid1,uid2,uid3
+
+nucleotide example:
+https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=nucleotide&id=28864546,28800981
+
 
 */
 
@@ -120,5 +136,34 @@ such as Abstract or MEDLINE from PubMed, or GenPept or FASTA from protein.
 Please see Table 1 for a full list of allowed values for each database.
 
 FASTA	fasta	text
+
+
+PubMed:
+
+https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=11850928,11482001
+
+PubMed, version 2.0 XML:
+
+https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=11850928,11482001&version=2.0
+
+Protein:
+
+https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=protein&id=28800982,28628843
+
+Nucleotide:
+
+https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=nucleotide&id=28864546,28800981
+
+Structure:
+
+https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=structure&id=19923,12120
+
+Taxonomy:
+
+https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=taxonomy&id=9913,30521
+
+UniSTS:
+
+https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=unists&id=254085,254086
 
 */
