@@ -60,7 +60,7 @@ func Query(accession UID) Fasta {
     // make the http request
     resp, err := http.Get(query_url)
     if err != nil {
-            log.Fatal(err)
+        log.Fatal(err)
     }        
     defer resp.Body.Close()
 
@@ -87,7 +87,7 @@ func QueryToFile(accession UID, output string) error {
     // make the http request
     resp, err := http.Get(query_url)
     if err != nil {
-            log.Fatal(err)
+        log.Fatal(err)
     } 
     defer resp.Body.Close()
 
