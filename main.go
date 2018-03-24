@@ -14,9 +14,7 @@ import(
 
 // include arguments for:
 
-func mergeWorkFlow( merge_data string, file_data string) {
 
-}
 // -m merge (multiple, output file name)
 	// take a list of files space delimited (or a .txt with filenames within)
 	// merge them and write to -f or default name
@@ -29,29 +27,42 @@ func mergeWorkFlow( merge_data string, file_data string) {
 		// Fasta struct and use AddItem to add all the seq to the first Fasta struct
 
 		// take the large Fasta struct and Write it to -f
-
-func ncbiWorkflow( ncbi_data string,  file_data string) {
+func mergeWorkFlow( merge_data string, file_data string, summary bool) {
 
 }
+
 
 // -n ncbi (batch or single)
 	// take either one string, multiple space delimited string or a text file
 	// parse the above into a slice of accession numbers, query NCBI for the accession numbers
+func ncbiWorkflow( ncbi_data string,  file_data string, summary bool) {
 
+}
 
 // -f if passed, change the output file names 
 	// for instance of both a .fasta and a summary, 
 	// take this name and split on a . , take the first bit and append .fasta and .txt to it and use accordingly
 
 
+
+
 // -s summary:
 	// if passed then produce a summary file
 
+// call this chunk at the end of the other workflows, before disposing of the fasta in memory
+if summary bool != false{
+	fasta.WriteSummary()	
+}
 
 // -a alphabetize the sequences in a fasta by name
 	// read in the fasta
 	// call the sort function on the fasta
 	// Write() to the input name
+
+func aplhaWorkflow(file_data string, summary bool) {
+
+}
+
 
 // -split (single, output file names == fasta names)
 	// for the split, have it take a list fasta struct, and split each member of 
@@ -64,6 +75,11 @@ func ncbiWorkflow( ncbi_data string,  file_data string) {
 		// for each seq in the Fasta struct, make a new Fasta struct and
 		// call Write() pass in the seq.name + ".fasta" as the output name for each 
 
+
+func splitWorkflow(file_data string, summary bool) {
+
+	// call the summary on the whole thing, before the split
+}
 
 
 // refactor needed - the bools for the most part work on files. have them accept a file name to work
@@ -106,18 +122,48 @@ func main(){
 
 	// need to then determine the workflow.
 
+	// count the passed pointers from exclusive list, if more then one, log an error
+	ex_count := 0
 	if *mergePtr != "__none__" {
-		if *ncbiPtr != "__none__" || *alphaPtr != false || *splitPtr != false {
-			err := fmt.Errorf("You may only pass in one of the followin three flags at a time: -m -n -a -split.\n" + 
-								"They cannot function in conjunction with one another.")
-			log.Fatal(err)
-		} else {
-			mergeWorkFlow(*mergePtr, *filePtr)
-		}
+		ex_count++
+	} 
+	if *ncbiPtr != "__none__"{
+		ex_count++
+	} 
+	if *alphaPtr != false{
+		ex_count++
+	}
+	if *splitPtr != false {
+		ex_count++
+	} 
+
+	// if multiple or 0 exclusive flags passed, raise an error	
+	if ex_count > 1{
+		err := fmt.Errorf("You may only pass in one of the followin three flags at a time: -m -n -a -split.\n" + 
+							"They cannot function in conjunction with one another."+ 
+							"Use the help flag: -h for argument use and formatting help.")
+		log.Fatal(err)
+	}
+	if ex_count == 0{
+		err := fmt.Errorf("You must use one of the following flags: -m -n -a -split.\n" + 
+							"Use the help flag: -h for argument use and formatting help.")
+		log.Fatal(err)
 	}
 
-
-	if *summaryPtr != false
-
+	// call the proper workflow based on the flags passed
+	if *mergePtr != "__none__" {
+		mergeWorkFlow(*mergePtr, *filePtr, *summaryPtr)
+	}
+	
+	if *ncbiPtr != "__none__"{
+		ncbiWorkflow(*ncbiPtr, *filePtr, *summaryPtr)
+	} 
+	
+	if *alphaPtr != false {
+		 aplhaWorkflow(*filePtr, *summaryPtr)
+	}
+	if *splitPtr != false {
+		splitWorkflow(*filePtr, *summaryPtr)
+	} 
 
 }
