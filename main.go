@@ -59,15 +59,6 @@ import(
 
 func main(){
 
-	wordPtr := flag.String("word", "foo", "a string")
-	//Here we declare a string flag word with a default value "foo" and a short description. 
-	//This flag.String function returns a string pointer (not a string value); so reference with * to get the value.
-
-	boolPtr := flag.Bool("fork", false, "a bool")
-	// this is a fork boolean pointer, if not passed, it is false, whe -fork is passed it becomes true
-
-
-
 	mergePtr := flag.String("m", nil, "A comma delimited list of fasta filenames to be merged.\n" +
 										"The final fasta will contain the sequences in the order of the .fasta inputs.\n" +
 										"You an also pass in a .txt filename which contains a list of filnames (all names specified on seprate lines).\n"
@@ -95,5 +86,9 @@ func main(){
 	// parse the command line arguments
 	flag.Parse() 
 
+	//can then be accessed using:
+	*mergePtr
+	*ncbiPtr
+	//etc
 
 }
