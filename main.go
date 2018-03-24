@@ -68,11 +68,22 @@ func main(){
 	filePtr := flag.String("f", "output.fasta", "A .fasta or .txt filename.\n" + 
 												"For use with -m -n and -s flags to speficy an output name.\n" +
 												"If both a fasta and summary are needed, just passed a .fasta name\n" + 
-												"and it will produce a summary file with the same name and a .txt extension")
+												"and it will produce a summary file with the same name and a .txt extension\n")
 
+	mergePtr := flag.String("m", nil, "A comma delimited list of fasta filenames to be merged.\n" +
+										"The final fasta will contain the sequences in the order of the .fasta inputs.\n" +
+										"You an also pass in a .txt filename which contains a list of filnames (all names specified on seprate lines).\n"
+										"Use in conjunction with the -f flag to alter the output file name.")
+
+	ncbiPtr := flag.String("n", nil, "A comma delimited list of unique NCBI IDs.\n" +
+									"The .fasta files associated with the accession IDs will be downloaded and saved to a .fasta file.\n" +
+									"You an also pass in a .txt filename which contains a list of IDs (all specified on seprate lines).\n" +
+									"Use in conjunction with the -f flag to alter the output file name.")
 
 	splitPtr := flag.Bool("split", false, "Pass this flag in to split the output fasta into a separate fasta file\n" +
-											"for each of its component sequences.")
+											"for each of its component sequences.\n")
+
+	alphaPtr := flag.String("a", "", "The sequences in the specified fasta file will be alphabetized by sequence name.\n")
 
 
 	// parse the command line arguments
