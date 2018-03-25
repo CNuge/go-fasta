@@ -8,6 +8,7 @@ import(
 	"flag"
 	"log"
 	"strings"
+	"io/ioutil"
 	)
 
 //CAM - try to find some of the functions that you can refactor into goroutines
@@ -34,8 +35,22 @@ import(
 
 // if a test file was passed with a flag, open a file and load in the 
 // newline separated data and split to a slice of strings.
-func parseFileData(filename string) []string {
-
+func parseFlagFileData(filename string) []string {
+	//Opening a file
+	file, err := ioutil.ReadFile(filename)
+	// check if that caused an error
+	if err != nil {
+		log.Fatal(err)
+	}
+	data := strings.Split(file, "\n")
+	// remove leading and trailing strings if they exist
+	if data[len(data)-1] == ""{
+		data = data[:len(data)-1]
+	}
+	if data[0] == ""{
+		data = data[1:]
+	}
+	return data
 }
 
 func parseFlagData(flagDat string) []string {
@@ -51,7 +66,7 @@ func parseFastaFlags(flagDat string) []string{
 	fasta_files := []string{}
 	for _ , i := range flag_input {
 		if i[len(i)-4:] == ".txt" {
-			add_fastas := parseFileData(i)
+			add_fastas := parseFlagFileData(i)
 			fasta_files = append(fasta_files, add_fastas...)
 		} else if i[len(i)-6:] == ".fasta" || i[len(i)-3:] == ".fa" {
 			fasta_files = append(fasta_files, i)
@@ -81,9 +96,26 @@ func mergeWorkFlow( merge_data string, file_data string, summary bool) {
 	// query NCBI for the accession numbers and write via the QueryToFile func
 	// it is direct and faster
 
+func parseNCBIFlagData( flagDat string) []string {
+	// split the flags
+	flag_input := parseFlagData(flagDat)
+
+	// iterate through the flags, handling .txt and .fastas separately
+	ncbi_ids := []string{}
+	for _ , i := range flag_input {
+		// check if it is a text file, if so pass to the flag file reader
+		if i[len(i)-4:] == ".txt" {
+			add_ids := parseFlagFileData(i)
+			ncbi_ids = append(ncbi_ids, add_ids...)
+		} else {
+			ncbi_ids = append(ncbi_ids, i)
+		}
+	} 
+	return ncbi_ids	
+}
 
 func ncbiWorkflow( ncbi_data string,  file_data string, summary bool) {
-	flag_input := parseFlagData(ncbi_data)
+	accessions := parseNCBIFlagData(ncbi_data)
 
 }
 
@@ -93,7 +125,7 @@ func ncbiWorkflow( ncbi_data string,  file_data string, summary bool) {
 	// Write() to the input name (parallel with the summary if needed)
 
 func aplhaWorkflow(file_data string, summary bool) {
-
+	fasta_file := fasta.Read(file_data)
 }
 
 
@@ -112,8 +144,13 @@ func aplhaWorkflow(file_data string, summary bool) {
 
 
 func splitWorkflow(file_data string, summary bool) {
+	fasta_file := fasta.Read(file_data)
+
 	// call the summary on the whole thing, parallel to the split
 }
+
+
+
 
 // -f if passed, change the output file names 
 	// for instance of both a .fasta and a summary, 
@@ -128,11 +165,6 @@ if summary bool != false{
 	fasta.WriteSummary()	
 }
 
-
-
-
-
-// refactor needed - the bools for the most part work on files. have them accept a file name to work
 
 
 func main(){

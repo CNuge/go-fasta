@@ -1,4 +1,4 @@
-package fasta
+fpackage fasta
 
 // contains code for seq and fasta structures
 // along with associated input/output methods
