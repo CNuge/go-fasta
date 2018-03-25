@@ -9,7 +9,9 @@ import(
 	"log"
 	)
 
-
+//CAM - try to find some of the functions that you can refactor into goroutines
+ // split function is prime for this!
+ // so is merge
 
 
 // include arguments for:
@@ -21,12 +23,13 @@ import(
 
 	// this is done by:
 		// parsing the filnames,
-		// read in the first file with Read
 
-		// for subsequent files, read in with Read, then append then iterate through their
-		// Fasta struct and use AddItem to add all the seq to the first Fasta struct
+		// read in the files with Read run via parallel goroutine
+		// merge them all to a single Fasta struct by sending the goroutines to the same struct
 
 		// take the large Fasta struct and Write it to -f
+		// if summary true, run it in parallel to the Write()
+	
 func mergeWorkFlow( merge_data string, file_data string, summary bool) {
 
 }
@@ -34,30 +37,23 @@ func mergeWorkFlow( merge_data string, file_data string, summary bool) {
 
 // -n ncbi (batch or single)
 	// take either one string, multiple space delimited string or a text file
-	// parse the above into a slice of accession numbers, query NCBI for the accession numbers
+	// parse the above into a slice of accession numbers, and make UID struct
+
+	// if summary true, call Query() then run Write()  in parallel to the Write()
+	
+	// if summary == false
+	// query NCBI for the accession numbers and write via the QueryToFile func
+	// it is direct and faster
+
+
 func ncbiWorkflow( ncbi_data string,  file_data string, summary bool) {
 
-}
-
-// -f if passed, change the output file names 
-	// for instance of both a .fasta and a summary, 
-	// take this name and split on a . , take the first bit and append .fasta and .txt to it and use accordingly
-
-
-
-
-// -s summary:
-	// if passed then produce a summary file
-
-// call this chunk at the end of the other workflows, before disposing of the fasta in memory
-if summary bool != false{
-	fasta.WriteSummary()	
 }
 
 // -a alphabetize the sequences in a fasta by name
 	// read in the fasta
 	// call the sort function on the fasta
-	// Write() to the input name
+	// Write() to the input name (parallel with the summary if needed)
 
 func aplhaWorkflow(file_data string, summary bool) {
 
@@ -65,21 +61,38 @@ func aplhaWorkflow(file_data string, summary bool) {
 
 
 // -split (single, output file names == fasta names)
-	// for the split, have it take a list fasta struct, and split each member of 
-	// the fasta into its own fasta struct, then take this and write each to a file
+	// for the split, have it take a list fasta struct 
+	// goroutine that takes each seq in the fasta into its own fasta struct, 
+	// and take this and write each to a file
 	// using the fasta.Write() function with the name of the sequence + ".fasta"
 	// passed in as the second name.
 
 	// this is done by:
 		// Read to access all the data in the file
-		// for each seq in the Fasta struct, make a new Fasta struct and
+		// goroutine that for each seq in the Fasta struct, make a new Fasta struct and
 		// call Write() pass in the seq.name + ".fasta" as the output name for each 
+		// summary parallel to goroutine above
 
 
 func splitWorkflow(file_data string, summary bool) {
-
-	// call the summary on the whole thing, before the split
+	// call the summary on the whole thing, parallel to the split
 }
+
+// -f if passed, change the output file names 
+	// for instance of both a .fasta and a summary, 
+	// take this name and split on a . , take the first bit and append .fasta and .txt to it and use accordingly
+
+
+// -s summary:
+	// if passed then produce a summary file
+
+// call this chunk in other workflows, run in parallel to other tasks where posisble
+if summary bool != false{
+	fasta.WriteSummary()	
+}
+
+
+
 
 
 // refactor needed - the bools for the most part work on files. have them accept a file name to work
