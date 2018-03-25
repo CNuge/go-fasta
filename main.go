@@ -7,6 +7,7 @@ import(
 	"./fasta"
 	"flag"
 	"log"
+	"strings"
 	)
 
 //CAM - try to find some of the functions that you can refactor into goroutines
@@ -30,7 +31,42 @@ import(
 		// take the large Fasta struct and Write it to -f
 		// if summary true, run it in parallel to the Write()
 	
+
+// if a test file was passed with a flag, open a file and load in the 
+// newline separated data and split to a slice of strings.
+func parseFileData(filename string) []string {
+
+}
+
+func parseFlagData(flagDat string) []string {
+	flag_input := strings.Split(flagDat, ",") //split on commas
+
+}
+
+func parseFastaFlags(flagDat string) []string{
+	// split the flags
+	flag_input := parseFlagData(flagDat)
+
+	// iterate through the flags, handling .txt and .fastas separately
+	fasta_files := []string{}
+	for _ , i := range flag_input {
+		if i[len(i)-4:] == ".txt" {
+			add_fastas := parseFileData(i)
+			fasta_files = append(fasta_files, add_fastas...)
+		} else if i[len(i)-6:] == ".fasta" || i[len(i)-3:] == ".fa" {
+			fasta_files = append(fasta_files, i)
+		} else {
+			err := fmt.Errorf("You have passed an filname to -m that does not have a .txt, .fasta or .fa extension.")
+			log.Fatal(err)	
+		}
+	} 
+	return fasta_files
+}
+
 func mergeWorkFlow( merge_data string, file_data string, summary bool) {
+	fasta_list := parseFastaFlaga(merge_data)
+
+	//goroutine to run the fasta.Read() method for all members of fasta_files
 
 }
 
@@ -47,6 +83,7 @@ func mergeWorkFlow( merge_data string, file_data string, summary bool) {
 
 
 func ncbiWorkflow( ncbi_data string,  file_data string, summary bool) {
+	flag_input := parseFlagData(ncbi_data)
 
 }
 
