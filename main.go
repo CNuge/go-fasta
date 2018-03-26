@@ -10,6 +10,8 @@ import(
 	"strings"
 	"io/ioutil"
 	)
+
+
 func parseFlagData(flagDat string) []string {
 	flag_input := strings.Split(flagDat, ",") //split on commas
 

@@ -1,3 +1,36 @@
+// take a fasta struct and sort the entries into alphabetical order by their name
+// improvement -> sort the sequence in place
+
 package fasta
 
-// take a fasta struct and sort the entries into alphabetical order by their name
+import(
+	"fmt"
+	"sort"
+	)
+
+
+// sort a Fasta by the seq names, modify it in place
+func (fa *Fasta) Sort() Fasta{
+	// make a dict where the keys are the sequence names
+	// and the values are a pointer to the seq structs
+	fasta_dict = make(map[string]string)
+	name_list := []string{}
+	// value is a pointer, to avoid moving the seq around twice
+	for _, s := range fa{
+		fasta_dict[s.name] = &s
+		name_list = append(name_list, s.name)
+	}
+
+	// quicksort of the keys (seq.name)
+	name_list = sort.Sort(name_list)
+
+	// make a new fasta
+	out_fasta := Fasta{}
+	// append the original seq to the output in the correct order
+	for _, i := range name_list{
+		to_add := fasta_dict[i]
+		out_fasta.AddItem(*to_add)
+	}
+
+	return out_fasta
+}

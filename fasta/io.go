@@ -1,4 +1,4 @@
-fpackage fasta
+package fasta
 
 // contains code for seq and fasta structures
 // along with associated input/output methods
@@ -88,6 +88,7 @@ func (sq seq) fileString() string {
 	}
 	return outstring
 }
+
 
 func (fa *Fasta) Write(file ...string) {
 	filename := ""
