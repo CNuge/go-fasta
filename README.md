@@ -43,3 +43,73 @@ for the fasta package:
 
 
 ## Notes on main
+
+
+// include arguments for:
+
+
+// -m merge (multiple, output file name)
+	// take a list of files space delimited (or a .txt with filenames within)
+	// merge them and write to -f or default name
+
+	// this is done by:
+		// parsing the filnames,
+
+		// read in the files with Read run via parallel goroutine
+		// merge them all to a single Fasta struct by sending the goroutines to the same struct
+
+		// take the large Fasta struct and Write it to -f
+		// if summary true, run it in parallel to the Write()
+	
+
+// if a test file was passed with a flag, open a file and load in the 
+// newline separated data and split to a slice of strings.
+
+
+
+// -n ncbi (batch or single)
+	// take either one string, multiple space delimited string or a text file
+	// parse the above into a slice of accession numbers, and make UID struct
+
+	// if summary true, call Query() then run Write()  in parallel to the Write()
+	
+	// if summary == false
+	// query NCBI for the accession numbers and write via the QueryToFile func
+	// it is direct and faster
+
+
+
+
+// -a alphabetize the sequences in a fasta by name
+	// read in the fasta
+	// call the sort function on the fasta
+	// Write() to the input name (parallel with the summary if needed)
+
+
+// -split (single, output file names == fasta names)
+	// for the split, have it take a list fasta struct 
+	// goroutine that takes each seq in the fasta into its own fasta struct, 
+	// and take this and write each to a file
+	// using the fasta.Write() function with the name of the sequence + ".fasta"
+	// passed in as the second name.
+
+	// this is done by:
+		// Read to access all the data in the file
+		// goroutine that for each seq in the Fasta struct, make a new Fasta struct and
+		// call Write() pass in the seq.name + ".fasta" as the output name for each 
+		// summary parallel to goroutine above
+
+
+
+// -f if passed, change the output file names 
+	// for instance of both a .fasta and a summary, 
+	// take this name and split on a . , take the first bit and append .fasta and .txt to it and use accordingly
+
+
+// -s summary:
+	// if passed then produce a summary file
+
+// call this chunk in other workflows, run in parallel to other tasks where posisble
+if summary bool != false{
+	fasta.WriteSummary()	
+}
