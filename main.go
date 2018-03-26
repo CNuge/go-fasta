@@ -205,13 +205,6 @@ func main(){
 	// parse the command line arguments
 	flag.Parse() 
 
-	//can then be accessed using:
-	*mergePtr
-	*ncbiPtr
-	//etc
-
-	// need to then determine the workflow.
-
 	// count the passed pointers from exclusive list, if more then one, log an error
 	ex_count := 0
 	if *mergePtr != "__none__" {
@@ -250,7 +243,7 @@ func main(){
 	} 
 	
 	if *alphaPtr != false {
-		 aplhaWorkflow(*filePtr, *summaryPtr)
+		aplhaWorkflow(*filePtr, *summaryPtr)
 	}
 	if *splitPtr != false {
 		splitWorkflow(*filePtr, *summaryPtr)

@@ -40,3 +40,6 @@ for the fasta package:
 
 - special fasta.Seq and fasta.File structures.
 - sequences are
+
+
+## Notes on main

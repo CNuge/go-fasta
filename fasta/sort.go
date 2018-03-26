@@ -10,11 +10,12 @@ import(
 
 
 // sort a Fasta by the seq names, modify it in place
-func (fa *Fasta) Sort() Fasta{
+func (fa *Fasta) Sort() Fasta {
 	// make a dict where the keys are the sequence names
 	// and the values are a pointer to the seq structs
 	fasta_dict = make(map[string]string)
 	name_list := []string{}
+
 	// value is a pointer, to avoid moving the seq around twice
 	for _, s := range fa{
 		fasta_dict[s.name] = &s
