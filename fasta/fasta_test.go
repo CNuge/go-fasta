@@ -10,3 +10,15 @@ package fasta
 	fmt.Println(out2)
 
 	QueryToFile(list_of_ids, "outfile.fasta")
+
+
+// For sort test
+
+	test_fasta := Fasta{entries : []seq{seq{name: "ZZZZ", sequence: "CAT"},
+								seq{name: "BBBB", sequence: "GC"},
+								seq{name: "AAAA", sequence: "ATGC"},
+								seq{name: "TTTT", sequence: "AATT"}}}
+
+	test_fasta.Sort()
+
+	fmt.Println(test_fasta)
