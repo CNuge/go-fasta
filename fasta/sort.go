@@ -13,13 +13,13 @@ import(
 func (fa *Fasta) Sort() {
 	// make a dict where the keys are the sequence names
 	// and the values are a pointer to the seq structs
-	fasta_dict := make(map[string]seq)
+	fasta_dict := make(map[string]int)
 	name_list := []string{}
 
-	// value is a pointer, to avoid moving the seq around twice
-	for _, s := range fa.entries {
-		fasta_dict[s.name] = s
-
+	// value is a index in original entries struct, 
+	// avoids moving the seq into intermediate structure
+	for i, s := range fa.entries {
+		fasta_dict[s.name] = i
 		name_list = append(name_list, s.name)
 	}
 
@@ -29,10 +29,10 @@ func (fa *Fasta) Sort() {
 	// make a new fasta
 	out_fasta := Fasta{}
 	// append the original seq to the output in the correct order
-	for _, i := range name_list {
-		to_add := fasta_dict[i]
+	for _, k := range name_list {
+		original_pos := fasta_dict[k]
 
-		out_fasta.AddItem(to_add)
+		out_fasta.AddItem(fa.entries[original_pos])
 	}
 	fmt.Println(out_fasta)
 
