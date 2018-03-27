@@ -94,7 +94,7 @@ func getSummaryName(name string) string {
 // fasta.Read() function and passes the data to the channel provided
 // it also requires a sync.WaitGroup{} to be initialized and referenced 
 // so that it can report completion of the read file
-func readToCh(filename string, ch chan fasta.Fasta, wg *sync.WaitGroup){
+func readFastaToCh(filename string, ch chan fasta.Fasta, wg *sync.WaitGroup){
 
 	// read the data in from the file
 	fasta_dat := fasta.Read(filename)
@@ -125,7 +125,7 @@ func mergeWorkFlow( merge_data string, file_data string, summary bool) {
     	wg.Add(1)
     	// spawn a goroutine to run the Read function
     	// this recieves the filename, the output channel and a pointer to the waitgroup as inputs
-    	go readToCh(fasta_list[i], ch, &wg)
+    	go readFastaToCh(fasta_list[i], ch, &wg)
     }
     // wait for everyone to finish
     wg.Wait()
@@ -150,21 +150,23 @@ func mergeWorkFlow( merge_data string, file_data string, summary bool) {
 }
 
 
-// -n ncbi (batch or single)
-	// take either one string, multiple space delimited string or a text file
-	// parse the above into a slice of accession numbers, and make UID struct
-
-	// if summary true, call Query() then run Write()  in parallel to the Write()
-	
-	// if summary == false
-	// query NCBI for the accession numbers and write via the QueryToFile func
-	// it is direct and faster
-
-
-
+// -n ncbi take accession numbers and query ncbi to build the fasta
 func ncbiWorkflow( ncbi_data string,  file_data string, summary bool) {
 	accessions := parseNCBIFlagData(ncbi_data)
+	ncbi_UID := fasta.UID{accessions}
 
+	// need to hold the fasta in memory to do the summary
+	// otherwise, just pipe it straight to the file
+	if summary == true {
+		output_fasta := fasta.Query(ncbi_UID)
+		summary_name := getSummaryName(file_data)
+    	
+    	go output_fasta.WriteSummary(summary_name)
+		go output_fasta.Write(file_data)
+
+	} else {
+		fasta.QueryToFile(ncbi_UID, file_data)
+	}
 }
 
 // -a alphabetize the sequences in a fasta by name
