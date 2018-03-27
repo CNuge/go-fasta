@@ -9,6 +9,7 @@ import(
 	"log"
 	"strings"
 	"io/ioutil"
+	"sync"
 	)
 
 
@@ -37,7 +38,7 @@ func parseFlagFileData(filename string) []string {
 }
 
 
-func parseFastaFlags(flagDat string) []string{
+func parseFastaFlags(flagDat string) []string {
 	// split the flags
 	flag_input := parseFlagData(flagDat)
 
@@ -101,12 +102,27 @@ func parseNCBIFlagData( flagDat string) []string {
 // if a test file was passed with a flag, open a file and load in the 
 // newline separated data and split to a slice of strings.
 
+func readToCh()
 
 func mergeWorkFlow( merge_data string, file_data string, summary bool) {
 	fasta_list := parseFastaFlaga(merge_data)
+	
+	// an output slice with len 0 and capacity equal to length of the fasta list
+	all_fasta_data := make([]fasta.Fasta, 0, len(fasta_list))
 
-	//goroutine to run the fasta.Read() method for all members of fasta_files
+	// a buffered channel the length of the number of input fastas
+	ch := make(chan fasta.Fasta, len(fasta_list))
+    
+    // waitgroup - basically block until N tasks say they are done
+    wg := sync.WaitGroup{}
 
+    for i=0 ; i<len(fasta_list); i++ {
+    	// say there is one more routine to wait for
+    	wg.Add(1)
+    	// spawn a goroutine to run through the 
+    }
+	// go call to summary if true
+	// go call to write concurrent to summary
 }
 
 
