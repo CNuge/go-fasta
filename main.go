@@ -89,29 +89,6 @@ func getSummaryName(name string) string {
 	}
 }
 
-//CAM - try to find some of the functions that you can refactor into goroutines
- // split function is prime for this!
- // so is merge
-
-
-// include arguments for:
-
-
-// -m merge (multiple, output file name)
-	// take a list of files space delimited (or a .txt with filenames within)
-	// merge them and write to -f or default name
-
-	// this is done by:
-		// parsing the filnames,
-
-		// read in the files with Read run via parallel goroutine
-		// merge them all to a single Fasta struct by sending the goroutines to the same struct
-
-		// take the large Fasta struct and Write it to -f
-		// if summary true, run it in parallel to the Write()
-// if a test file was passed with a flag, open a file and load in the 
-// newline separated data and split to a slice of strings.
-
 
 // this is the file read function used as a goroutine, it runs the 
 // fasta.Read() function and passes the data to the channel provided
@@ -128,6 +105,8 @@ func readToCh(filename string, ch chan fasta.Fasta, wg *sync.WaitGroup){
     wg.Done()
 }
 
+
+// -m merge flag processing
 func mergeWorkFlow( merge_data string, file_data string, summary bool) {
 	fasta_list := parseFastaFlaga(merge_data)
 	
@@ -154,6 +133,7 @@ func mergeWorkFlow( merge_data string, file_data string, summary bool) {
     close(ch)
 
     // iterate through the channel data
+    // merge them to a single fasta struct, so it can be printed to a file
     for file_dat := range ch{
     	//append each of the entries to the output entries list
     	output_fasta.entries = append(output_fasta.entries, file_dat.entries...)

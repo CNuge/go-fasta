@@ -22,6 +22,27 @@ func (sq seq) String() string {
 	return fmt.Sprintf(">%v\n%v\n", sq.name, sq.sequence)
 }
 
+// print a sequence in fasta fmt with newline characters
+// after every 60 nucleotides
+func (sq seq) fileString() string {
+	outstring := fmt.Sprintf(">%v\n", sq.name)
+	for i := 0; i <= len(sq.sequence); i = i + 60 {
+		// check if we have reached the end of the sequence
+		var back int
+		if i+60 > len(sq.sequence) {
+			back = len(sq.sequence)
+		} else {
+			back = i + 60
+		}
+
+		line := fmt.Sprintf("%v\n", sq.sequence[i:back])
+		outstring = fmt.Sprintf("%v%v", outstring, line)
+
+	}
+	return outstring
+}
+
+
 // represent a list of sequences as a Fasta
 type Fasta struct {
 	entries []seq
@@ -69,25 +90,6 @@ func Read(filename string) Fasta {
 	return fileseqs
 }
 
-// print a sequence in fasta fmt with newline characters
-// after every 60 nucleotides
-func (sq seq) fileString() string {
-	outstring := fmt.Sprintf(">%v\n", sq.name)
-	for i := 0; i <= len(sq.sequence); i = i + 60 {
-		// check if we have reached the end of the sequence
-		var back int
-		if i+60 > len(sq.sequence) {
-			back = len(sq.sequence)
-		} else {
-			back = i + 60
-		}
-
-		line := fmt.Sprintf("%v\n", sq.sequence[i:back])
-		outstring = fmt.Sprintf("%v%v", outstring, line)
-
-	}
-	return outstring
-}
 
 
 func (fa *Fasta) Write(file ...string) {
