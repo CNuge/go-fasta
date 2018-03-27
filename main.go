@@ -76,6 +76,18 @@ func parseNCBIFlagData( flagDat string) []string {
 	return ncbi_ids	
 }
 
+func getSummaryName(name string) string {
+	// note here the len(name) =< 6 is to avoid a bug of filenames shorter than '.fasta'
+	if name[len()name-3:] == ".fa" {
+		return name[:len()name-3] + ".txt"
+	} else if len(name) =< 6 {
+		return name
+	} else if name[len(name)-6:] == ".fasta" {
+		return name[:len(name)-6] + '.txt'
+	} else {
+		return name
+	}
+}
 
 //CAM - try to find some of the functions that you can refactor into goroutines
  // split function is prime for this!
@@ -97,18 +109,31 @@ func parseNCBIFlagData( flagDat string) []string {
 
 		// take the large Fasta struct and Write it to -f
 		// if summary true, run it in parallel to the Write()
-	
-
 // if a test file was passed with a flag, open a file and load in the 
 // newline separated data and split to a slice of strings.
 
-func readToCh()
+
+// this is the file read function used as a goroutine, it runs the 
+// fasta.Read() function and passes the data to the channel provided
+// it also requires a sync.WaitGroup{} to be initialized and referenced 
+// so that it can report completion of the read file
+func readToCh(filename string, ch chan fasta.Fasta, wg *sync.WaitGroup){
+
+	// read the data in from the file
+	fasta_dat := fasta.Read(filename)
+
+	// push the final object down the channel
+    ch <- fasta_dat
+    // let the wait group know we finished
+    wg.Done()
+}
 
 func mergeWorkFlow( merge_data string, file_data string, summary bool) {
 	fasta_list := parseFastaFlaga(merge_data)
 	
 	// an output slice with len 0 and capacity equal to length of the fasta list
-	all_fasta_data := make([]fasta.Fasta, 0, len(fasta_list))
+	// output_fasta.entries is empty to start, but we can append to it
+	output_fasta := fasta.Fasta{}
 
 	// a buffered channel the length of the number of input fastas
 	ch := make(chan fasta.Fasta, len(fasta_list))
@@ -119,10 +144,29 @@ func mergeWorkFlow( merge_data string, file_data string, summary bool) {
     for i=0 ; i<len(fasta_list); i++ {
     	// say there is one more routine to wait for
     	wg.Add(1)
-    	// spawn a goroutine to run through the 
+    	// spawn a goroutine to run the Read function
+    	// this recieves the filename, the output channel and a pointer to the waitgroup as inputs
+    	go readToCh(fasta_list[i], ch, &wg)
     }
-	// go call to summary if true
+    // wait for everyone to finish
+    wg.Wait()
+    // close the channel so that we can 
+    close(ch)
+
+    // iterate through the channel data
+    for file_dat := range ch{
+    	//append each of the entries to the output entries list
+    	output_fasta.entries = append(output_fasta.entries, file_dat.entries...)
+    }
+
+    // go call to summary
+    if summary == true {
+    	summary_name := getSummaryName(file_data)
+    	go output_fasta.WriteSummary(summary_name)
+    }
+	
 	// go call to write concurrent to summary
+	go output_fasta.Write(file_data)
 }
 
 
@@ -238,7 +282,7 @@ func main(){
 
 	// if multiple or 0 exclusive flags passed, raise an error	
 	if ex_count > 1{
-		err := fmt.Errorf("You may only pass in one of the followin three flags at a time: -m -n -a -split.\n" + 
+		err := fmt.Errorf("You may only pass in one of the following three flags at a time: -m -n -a -split.\n" + 
 							"They cannot function in conjunction with one another."+ 
 							"Use the help flag: -h for argument use and formatting help.")
 		log.Fatal(err)
