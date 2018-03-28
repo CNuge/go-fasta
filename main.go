@@ -175,6 +175,21 @@ func ncbiWorkflow( ncbi_data string,  file_data string, summary bool) {
 
 func aplhaWorkflow(file_data string, summary bool) {
 	fasta_file := fasta.Read(file_data)
+
+	fasta_file.Sort()
+
+	// need to hold the fasta in memory to do the summary
+	// otherwise, just pipe it straight to the file
+	if summary == true {
+		summary_name := getSummaryName(file_data)
+    	
+    	go fasta_file.WriteSummary(summary_name)
+		go fasta_file.Write()
+
+	} else {
+		fasta_file.Write()
+
+	}
 }
 
 
