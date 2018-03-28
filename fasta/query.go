@@ -16,16 +16,13 @@ import(
 )
 
 
-type UID struct {
-    all []string
-}
 
-func buildURL(accession UID) string {
+func buildURL(accession []string) string {
     url_front := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="
     
     // build the middle of the url from the input slice
     url_middle := ""
-    for _, i := range accession.all {
+    for _, i := range []string {
         url_middle = fmt.Sprintf("%v,%v", url_middle, i)
     }
     
@@ -53,7 +50,7 @@ func fastaFromQuery(raw_data string) Fasta {
 }
 
 // take the query unique IDs and get string response
-func Query(accession UID) Fasta {
+func Query(accession []string) Fasta {
     //construct the url
     query_url := buildURL(accession)
     
@@ -73,7 +70,7 @@ func Query(accession UID) Fasta {
 }
 
 
-func QueryToFile(accession UID, output string) error {
+func QueryToFile(accession []string, output string) error {
     // construct the url
     query_url := buildURL(accession)
 

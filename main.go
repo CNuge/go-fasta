@@ -51,7 +51,7 @@ func parseFastaFlags(flagDat string) []string {
 		} else if i[len(i)-6:] == ".fasta" || i[len(i)-3:] == ".fa" {
 			fasta_files = append(fasta_files, i)
 		} else {
-			err := fmt.Errorf("You have passed an filname to -m that does not have a .txt, .fasta or .fa extension.")
+			err := fmt.Errorf("You have passed an filname to -m that does not have a .txt, .fasta or .fa extension.\n")
 			log.Fatal(err)	
 		}
 	} 
@@ -153,19 +153,18 @@ func mergeWorkFlow( merge_data string, file_data string, summary bool) {
 // -n ncbi take accession numbers and query ncbi to build the fasta
 func ncbiWorkflow( ncbi_data string,  file_data string, summary bool) {
 	accessions := parseNCBIFlagData(ncbi_data)
-	ncbi_UID := fasta.UID{accessions}
 
 	// need to hold the fasta in memory to do the summary
 	// otherwise, just pipe it straight to the file
 	if summary == true {
-		output_fasta := fasta.Query(ncbi_UID)
+		output_fasta := fasta.Query(accessions)
 		summary_name := getSummaryName(file_data)
     	
     	go output_fasta.WriteSummary(summary_name)
 		go output_fasta.Write(file_data)
 
 	} else {
-		fasta.QueryToFile(ncbi_UID, file_data)
+		fasta.QueryToFile(accessions, file_data)
 	}
 }
 
