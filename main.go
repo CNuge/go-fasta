@@ -28,7 +28,7 @@ func parseFlagFileData(filename string) []string {
 	}
 	data := strings.Split(file, "\n")
 	// remove leading and trailing strings if they exist
-	if data[len(data)-1] == ""{
+	if data[len(data)-1] == "" {
 		data = data[:len(data)-1]
 	}
 	if data[0] == ""{
@@ -243,7 +243,9 @@ func main(){
 	
 	summaryPtr := flag.Bool("summary", false, "Make a summary file of output. Pass this flag and a summary file will be constructed which\n" +
 												"gives the following information for each sequence in the fasta produced:\n" +
-												"sequence name\t sequence length\t percent gc content\n")
+												"sequence name\t sequence length\t percent gc content\n" + 
+												"IMPORTANT NOTE: summary is designed for use with nucleotide based fasta files" +
+												"if you call it on a protein sequence fasta file the gc content column will be nonsense!")
 
 	filePtr := flag.String("f", "output.fasta", "File name. A .fasta or .txt filename.\n" + 
 												"For use with -m -n -a -split and -summary flags to specify an output name.\n" +
