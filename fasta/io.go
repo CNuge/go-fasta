@@ -5,7 +5,7 @@ package fasta
 
 import (
 	"fmt"
-	"io/ioutil" //input/output utilities https://golang.org/pkg/io/ioutil/
+	"io/ioutil" // input/output utilities https://golang.org/pkg/io/ioutil/
 	"log"       // for logging errors
 	"os"
 	"strings"

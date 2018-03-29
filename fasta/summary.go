@@ -21,12 +21,12 @@ func (sd summaryDat) String() string {
 }
 
 // get the length of a seq
-func (sq seq) len() int {
+func (sq Seq) len() int {
 	return len(sq.sequence)
 }
 
 // gc content of a seq
-func (sq seq) percGC() float64 {
+func (sq Seq) percGC() float64 {
 	bp := 0
 	gc := 0
 	// below we check to make sure the bases are ATGC 

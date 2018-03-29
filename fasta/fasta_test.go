@@ -1,5 +1,10 @@
 package fasta
 
+import (
+	"fmt"
+	"reflect"
+	"testing"
+)
 
 
 	single := UID{[]string{"AY646679.1"}}
@@ -22,3 +27,19 @@ package fasta
 	test_fasta.Sort()
 
 	fmt.Println(test_fasta)
+
+
+// a test syntax example I have from elsewhere
+func TestQueue(t *testing.T) {
+	q := Queue{}
+	compare_q := Queue{ord: []int{7, 8, 9}}
+	compare_q2 := Queue{ord: []int{8, 9}}
+
+	q.Add(7)
+	q.Add(8)
+	q.Add(9)
+
+	if reflect.DeepEqual(q.ord, compare_q.ord) != true {
+		t.Errorf("Adding to Queue incorrect: %v, want: %v.", q, compare_q)
+	}
+}
