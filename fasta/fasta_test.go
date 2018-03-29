@@ -14,10 +14,10 @@ package fasta
 
 // For sort test
 
-	test_fasta := Fasta{entries : []seq{seq{name: "ZZZZ", sequence: "CAT"},
-								seq{name: "BBBB", sequence: "GC"},
-								seq{name: "AAAA", sequence: "ATGC"},
-								seq{name: "TTTT", sequence: "AATT"}}}
+	test_fasta := Fasta{entries : []Seq{Seq{name: "ZZZZ", sequence: "CAT"},
+								Seq{name: "BBBB", sequence: "GC"},
+								Seq{name: "AAAA", sequence: "ATGC"},
+								Seq{name: "TTTT", sequence: "AATT"}}}
 
 	test_fasta.Sort()
 

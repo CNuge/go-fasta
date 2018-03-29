@@ -105,6 +105,18 @@ func readFastaToCh(filename string, ch chan fasta.Fasta, wg *sync.WaitGroup){
     wg.Done()
 }
 
+// this can be used to write multiple files to output in parallel
+// it is used as part of the -split module
+func parallelWrite( s fasta.Seq , wg *sync.WaitGroup){
+	// get name, sequence name + .fasta suffix
+	output_name := s.sequence + ".fasta"
+	// put the seq struct into a fasta.Fasta struct
+	output := fasta.Fasta{s}
+	// write the seq to the fasta file
+	output.Write(output_name)
+	// tell the waitgroup we are done
+	wg.Done()
+}
 
 // -m merge flag processing
 func mergeWorkFlow( merge_data string, file_data string, summary bool) {
@@ -169,10 +181,6 @@ func ncbiWorkflow( ncbi_data string,  file_data string, summary bool) {
 }
 
 // -a alphabetize the sequences in a fasta by name
-	// read in the fasta
-	// call the sort function on the fasta
-	// Write() to the input name (parallel with the summary if needed)
-
 func aplhaWorkflow(file_data string, summary bool) {
 	fasta_file := fasta.Read(file_data)
 
@@ -188,47 +196,31 @@ func aplhaWorkflow(file_data string, summary bool) {
 
 	} else {
 		fasta_file.Write()
-
 	}
 }
 
 
-// -split (single, output file names == fasta names)
-	// for the split, have it take a list fasta struct 
-	// goroutine that takes each seq in the fasta into its own fasta struct, 
-	// and take this and write each to a file
-	// using the fasta.Write() function with the name of the sequence + ".fasta"
-	// passed in as the second name.
 
-	// this is done by:
-		// Read to access all the data in the file
-		// goroutine that for each seq in the Fasta struct, make a new Fasta struct and
-		// call Write() pass in the seq.name + ".fasta" as the output name for each 
-		// summary parallel to goroutine above
-
-
+// -split take one input fasta and split it to one file for each sequence
 func splitWorkflow(file_data string, summary bool) {
 	fasta_file := fasta.Read(file_data)
 
 	// call the summary on the whole thing, parallel to the split
+	if summary == true {
+		go fasta_file.WriteSummary(summary_name)
+	}
+
+	wg := sync.WaitGroup{}
+	for _, s := range fasta_file.entries {
+		// say wait on one more thing
+		wg.Add(1)
+		go parallelWrite(s)
+
+	}
+    
+    // wait for everyone to finish
+    wg.Wait()
 }
-
-
-
-
-// -f if passed, change the output file names 
-	// for instance of both a .fasta and a summary, 
-	// take this name and split on a . , take the first bit and append .fasta and .txt to it and use accordingly
-
-
-// -s summary:
-	// if passed then produce a summary file
-
-// call this chunk in other workflows, run in parallel to other tasks where posisble
-if summary bool != false{
-	fasta.WriteSummary()	
-}
-
 
 
 func main(){
@@ -269,7 +261,7 @@ func main(){
 	if *ncbiPtr != "__none__"{
 		ex_count++
 	} 
-	if *alphaPtr != false{
+	if *alphaPtr != false {
 		ex_count++
 	}
 	if *splitPtr != false {

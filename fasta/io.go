@@ -12,19 +12,19 @@ import (
 	)
 
 // represent a single sequence
-type seq struct {
+type Seq struct {
 	name     string
 	sequence string
 }
 
 // the function to return the sequence in fasta format when printed
-func (sq seq) String() string {
+func (sq Seq) String() string {
 	return fmt.Sprintf(">%v\n%v\n", sq.name, sq.sequence)
 }
 
 // print a sequence in fasta fmt with newline characters
 // after every 60 nucleotides
-func (sq seq) fileString() string {
+func (sq Seq) fileString() string {
 	outstring := fmt.Sprintf(">%v\n", sq.name)
 	for i := 0; i <= len(sq.sequence); i = i + 60 {
 		// check if we have reached the end of the sequence
@@ -57,17 +57,17 @@ func (fa Fasta) String() string {
 }
 
 // add a seq struct instance to the fasta struct
-func (fa *Fasta) AddItem(item seq) []seq {
+func (fa *Fasta) AddItem(item Seq) []Seq {
 	fa.entries = append(fa.entries, item)
 	return fa.entries
 }
 
 // take a raw entry string from a fasta file and build a seq structure
-func ParseFasta(fasta_entry string) seq {
+func ParseFasta(fasta_entry string) Seq {
 	entry := strings.Split(fasta_entry, "\n")
 	// first position is the name,
 	// join everything but the first line into a single string
-	return seq{name: entry[0],
+	return Seq{name: entry[0],
 		sequence: strings.Join(entry[1:], "")}
 }
 
