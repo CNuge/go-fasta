@@ -64,10 +64,7 @@ func TestSort(t *testing.T){
 // to this one, add an error that gets thrown when an AA seq is passed in
 // 
 func TestSummary(t *testing.T){
-	//test_seq1, len = 12, gc = .5
-	//test_seq2, len = 27, gc = .93
-	//test_seq3, len = 18, gc = .89
-	//test_seq4, len = 14, gc = 1.00
+
 	test_in := Fasta{entries : []Seq{	Seq{name: "test_seq1", 
 											sequence: "ATGCATGCATGC"},
 										Seq{name: "test_seq2", 
@@ -83,18 +80,18 @@ func TestSummary(t *testing.T){
 	//test_seq2, len = 27, gc = .93
 	//test_seq3, len = 18, gc = .89
 	//test_seq4, len = 14, gc = 1.00
-	exp_output := []summaryDat{ summaryDat{ name : ,
-											length : ,
-											gc : , } ,
-								summaryDat{ name : ,
-											length : ,
-											gc : , } ,
-								summaryDat{ name : ,
-											length : ,
-											gc : , } ,
-								summaryDat{ name : ,
-											length : ,
-											gc : , } }
+	exp_output := []summaryDat{ summaryDat{ name : "test_seq1",
+											length : 12,
+											gc : .50} ,
+								summaryDat{ name : "test_seq2",
+											length : 27,
+											gc : .93} ,
+								summaryDat{ name : "test_seq3",
+											length : 18,
+											gc : .89} ,
+								summaryDat{ name : "test_seq4",
+											length : 14,
+											gc : 1.00}}
 	
 	test_output := test_in.Summary()
 
