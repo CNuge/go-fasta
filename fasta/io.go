@@ -45,7 +45,7 @@ func (sq Seq) fileString() string {
 
 // represent a list of sequences as a Fasta
 type Fasta struct {
-	entries []seq
+	entries []Seq
 }
 
 func (fa Fasta) String() string {

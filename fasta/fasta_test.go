@@ -19,6 +19,20 @@ func TestQuery(t *testing.T){
 
 func TestSort(t *testing.T){
 
+	unsorted := Fasta{entries : []Seq{Seq{name: "sdsdsd", sequence: "CAT"},
+									Seq{name: "chr1", sequence: "GC"},
+									Seq{name: "1chr", sequence: "ATGC"},
+									Seq{name: "chr2", sequence: "AATT"}}}
+
+	sorted := Fasta{entries : []Seq {Seq{name: "1chr", sequence: "ATGC"},
+									Seq{name: "chr1", sequence: "GC"},
+									Seq{name: "chr2", sequence: "AATT"},
+									Seq{name: "sdsdsd", sequence: "CAT"}}}
+	
+	unsorted.Sort()			
+	if reflect.DeepEqual(unsorted, sorted) != true {
+		t.Errorf("Adding to Queue incorrect: %v, want: %v.", q, compare_q)
+	}
 }
 
 func TestSummary(t *testing.T){

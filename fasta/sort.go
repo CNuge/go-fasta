@@ -34,7 +34,6 @@ func (fa *Fasta) Sort() {
 
 		out_fasta.AddItem(fa.entries[original_pos])
 	}
-	fmt.Println(out_fasta)
 
 	*fa =  out_fasta
 }
