@@ -7,6 +7,25 @@ import (
 )
 
 
+
+func TestIO(t *testing.T){
+
+}
+
+
+func TestQuery(t *testing.T){
+
+}
+
+func TestSort(t *testing.T){
+
+}
+
+func TestSummary(t *testing.T){
+
+}
+
+
 	single := UID{[]string{"AY646679.1"}}
 	out1 := Query(single)
 	fmt.Println(out1)
