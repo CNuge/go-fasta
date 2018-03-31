@@ -29,17 +29,22 @@ from cmd line:
 	the length and GC content of each.
 
 for the fasta package:
+- fasta.ParseFasta()
 - fasta.Read()
 - fasta.Write()
 - fasta.Query()
-
+- fasta.QueryToFile()
 - fasta.Merge()
 - fasta.Split()
 - fasta.Sort() - take multiple sequences in a fasta.File struct and sort them
 - fasta.Summary() - get a summary table with GC count and nucleotide count for all sequences in a file
+- fasta.WriteSummary()
 
-- special fasta.Seq and fasta.File structures.
+- special fasta.Seq and fasta.Fasta structures.
 - sequences are
+
+
+
 
 
 ## Notes on main
@@ -109,7 +114,29 @@ for the fasta package:
 // -s summary:
 	// if passed then produce a summary file
 
-// call this chunk in other workflows, run in parallel to other tasks where posisble
-if summary bool != false{
-	fasta.WriteSummary()	
-}
+	mergePtr := flag.String("m", "__none__", "Merge Fastas. A comma delimited list of fasta filenames to be merged.\n" +
+										"The final fasta will contain the sequences in the order of the .fasta inputs.\n" +
+										"You an also pass in a .txt filename which contains a list of filnames (all names specified on seprate lines).\n"
+										"Use in conjunction with the -f flag to alter the output file name.")
+
+	ncbiPtr := flag.String("n", "__none__", "Query NCBI. A comma delimited list of unique NCBI IDs.\n" +
+										"The .fasta files associated with the accession IDs will be downloaded and saved to a .fasta file.\n" +
+										"You an also pass in a .txt filename which contains a list of IDs (all specified on seprate lines).\n" +
+										"Use in conjunction with the -f flag to alter the output file name.")
+
+	alphaPtr := flag.Bool("a", false, "Alphabetize Fasta. Pass this flag name in conjunction with a -f flag.\n" +
+										"Sequences in the -f specified file will be sorted alphabetically by sequence name.\n")
+
+	splitPtr := flag.Bool("split", false, "Split Fasta. Pass this flag name in conjunction with a -f flag.\n" +
+											"The Sequences in the -f specified file will be split into a set of fasta files, one for each sequence in the file.\n")
+	
+	summaryPtr := flag.Bool("summary", false, "Make a summary file of output. Pass this flag and a summary file will be constructed which\n" +
+												"gives the following information for each sequence in the fasta produced:\n" +
+												"sequence name\t sequence length\t percent gc content\n" + 
+												"IMPORTANT NOTE: summary is designed for use with nucleotide based fasta files" +
+												"if you call it on a protein sequence fasta file the gc content column will be nonsense!")
+
+	filePtr := flag.String("f", "output.fasta", "File name. A .fasta or .txt filename.\n" + 
+												"For use with -m -n -a -split and -summary flags to specify an output name.\n" +
+												"If both a fasta and summary are needed, just passed a .fasta name\n" + 
+												"and it will produce a summary file with the same name and a .txt extension\n")
