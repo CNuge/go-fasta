@@ -22,7 +22,7 @@ func buildURL(accession []string) string {
     
     // build the middle of the url from the input slice
     url_middle := ""
-    for _, i := range []string {
+    for _, i := range accession {
         url_middle = fmt.Sprintf("%v,%v", url_middle, i)
     }
     
