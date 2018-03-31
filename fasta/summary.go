@@ -17,7 +17,7 @@ type summaryDat struct {
 
 // represent the summary data structures for printing
 func (sd summaryDat) String() string {
-	return fmt.Sprintf("%v\t%v\t%v\n", sd.name, sd.length, sd.gc)
+	return fmt.Sprintf("%v\t%v\t%.2f\n", sd.name, sd.length, sd.gc)
 }
 
 // get the length of a seq

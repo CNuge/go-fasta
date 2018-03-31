@@ -3,6 +3,8 @@ package main
 
 import(
     "fmt"
+	"reflect"
+	"strings"
 )
 
 
@@ -43,10 +45,6 @@ type summaryDat struct {
 	gc     float64
 }
 
-// represent the summary data structures for printing
-func (sd summaryDat) String() string {
-	return fmt.Sprintf("%v\t%v\t%v\n", sd.name, sd.length, sd.gc)
-}
 
 // get the length of a seq
 func (sq Seq) len() int {
@@ -82,22 +80,60 @@ func (fa Fasta) Summary() []summaryDat {
 	return output
 }
 
+// represent the summary data structures for printing
+func (sd summaryDat) String() string {
+	return fmt.Sprintf("%v\t%v\t%.2f\n", sd.name, sd.length, sd.gc)
+}
+
 
 func main() {
+
+	test_in := Fasta{entries : []Seq{	Seq{name: "test_seq1", 
+											sequence: "ATGCATGCATGC"},
+										Seq{name: "test_seq2", 
+											sequence: "ATATATATATATATATATATAAAAAGC"},
+										Seq{name: "test_seq3", 
+											sequence: "GCGCGCGCATGCGCGCGC"},
+										Seq{name: "test_seq4", 
+											sequence: "GGGCGGGCGGGCCC"},
+								}}
+
+	// Correct #s for test summary sequence
 	//test_seq1, len = 12, gc = .5
 	//test_seq2, len = 27, gc = .93
 	//test_seq3, len = 18, gc = .89
 	//test_seq4, len = 14, gc = 1.00
-	Fasta{entries : []Seq{	Seq{name: "test_seq1", 
-								sequence: "ATGCATGCATGC"},
-							Seq{name: "test_seq2", 
-								sequence: "ATATATATATATATATATATAAAAAGC"},
-							Seq{name: "test_seq3", 
-								sequence: "GCGCGCGCATGCGCGCGC"},
-							Seq{name: "test_seq4", 
-								sequence: "GGGCGGGCGGGCCC"},
-			}}
+	exp_output := []summaryDat{ summaryDat{ name : "test_seq1",
+											length : 12,
+											gc : 50.00} ,
+								summaryDat{ name : "test_seq2",
+											length : 27,
+											gc : 7.41} ,
+								summaryDat{ name : "test_seq3",
+											length : 18,
+											gc : 88.89} ,
+								summaryDat{ name : "test_seq4",
+											length : 14,
+											gc : 100.00}}
+	
+	test_output := test_in.Summary()
 
+	test_output_string := ""
+	for _ , i := range test_in.Summary(){
+		test_output_string = fmt.Sprintf("%v%v", test_output_string , i.String())
+	}
 
+	exp_output_string := ""
+	for _ , i := range test_in.Summary(){
+		exp_output_string = fmt.Sprintf("%v%v", exp_output_string , i.String())
+	}
+
+	fmt.Println(exp_output)
+
+	fmt.Println(test_output)
+
+	if reflect.DeepEqual(test_output_string , exp_output_string) != true {
+		fmt.Printf("Summary of Fasta incorrect: %v\n want: %v.", test_output, exp_output)
+	}
 
 }
