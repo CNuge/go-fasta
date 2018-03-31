@@ -54,7 +54,7 @@ func TestSort(t *testing.T){
 	
 	unsorted.Sort()			
 	if reflect.DeepEqual(unsorted, sorted) != true {
-		t.Errorf("Adding to Queue incorrect: %v, want: %v.", q, compare_q)
+		t.Errorf("Sorting of Fasta structure incorrect: %v\n want: %v.", unsorted, sorted)
 	}
 }
 
