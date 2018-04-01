@@ -1,11 +1,8 @@
 # go-fasta
-## command line based fasta housekeeping
-## query NCBI to obtain the .fasta for a given accession number
-## merge, split, clean and utilize fasta files in other go programs.
+## Command line based fasta housekeeping (merge, split, clean and summarize), query NCBI to fasta files with sequence corresponding to given accession numbers.
 
-
-TODO:
-- unit tests for io file
+# UNDER CONSTRUCTION - library works but I'm still working on documentation!
+Still TO DO:
 - documentation for the package in the proper idiomatic go fmt
 - test all of the cmd line functionality, make sure parallel parts work as expected
 - documentation for the repository. update the readme file
@@ -23,12 +20,6 @@ goal:
 	several simple commands for interacting with fasta files.
 
 
-first:
-- go through and assemble the read and write functions for the fasta package
-
-
-
-to do:
 
 from cmd line:
 - download fasta from NCBI when provided with an accession number, numbers or a list
