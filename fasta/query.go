@@ -43,7 +43,7 @@ func fastaFromQuery(raw_data string) Fasta {
 	// so we iterate from 1:end and get the sequence
 	// here we parse the fasta and add it to the slice of seq
 	for _, entry := range data[1:] {
-		fileseqs.AddItem(ParseFasta(entry))
+		fileseqs.AddItem(ParseSeq(entry))
 	}
 	return fileseqs
 }

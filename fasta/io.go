@@ -53,19 +53,20 @@ func (fa Fasta) String() string {
 	return outstring
 }
 
-// add a seq struct instance to the fasta struct
-func (fa *Fasta) AddItem(item Seq) {
-	*fa = append(*fa, item)
-}
-
 // take a raw entry string from a fasta file and build a seq structure
-func ParseFasta(fasta_entry string) Seq {
+func ParseSeq(fasta_entry string) Seq {
 	entry := strings.Split(fasta_entry, "\n")
 	// first position is the name,
 	// join everything but the first line into a single string
 	return Seq{Name: entry[0],
 		Sequence: strings.Join(entry[1:], "")}
 }
+
+// add a seq struct instance to the fasta struct
+func (fa *Fasta) AddItem(item Seq) {
+	*fa = append(*fa, item)
+}
+
 
 func Read(filename string) Fasta {
 	fileseqs := Fasta{} // start an empty Fasta instance
@@ -81,7 +82,7 @@ func Read(filename string) Fasta {
 	// so we iterate from 1:end and get the sequence
 	// here we parse the fasta and add it to the slice of seq
 	for _, entry := range data[1:] {
-		fileseqs.AddItem(ParseFasta(entry))
+		fileseqs.AddItem(ParseSeq(entry))
 	}
 	return fileseqs
 }

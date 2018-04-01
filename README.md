@@ -24,26 +24,24 @@ Importing this library provides the following specalized data structures and met
 
 
 type `Seq`
-
-type `Fasta`
+	a struct with two files, .Name and .Sequence to represent the two parts of a fasta file entry.
+	When read in to the structure (via ParseFasta) the leading > is stripped from the name.
+type `Fasta` 
+	a slice of Seq types []Seq
 
 func ParseFasta(fasta_entry string)
 
+func (fa \*Fasta) AddItem(item Seq)
+
 func Read(filename string)
 
-func (fa \*Fasta) Write(filename)
+func (fa Fasta) Write(filename)
 
 func (fa \*Fasta) Sort()
 
 func Query(accession)
 
 func QueryToFile(accession []string, output string)
-
-type summaryDat struct {
-	name   string
-	length int
-	gc     float64
-}
 
 func (fa Fasta) Summary()
 
