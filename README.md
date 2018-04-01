@@ -1,5 +1,5 @@
 # go-fasta
-## Command line based fasta housekeeping (merge, split, clean and summarize), query NCBI to fasta files with sequence corresponding to given accession numbers.
+## Command line based fasta housekeeping (merge, split, sort and summarize), also queries NCBI to obtain fasta files with sequence corresponding to given accession numbers.
 
 # UNDER CONSTRUCTION - library works but I'm still working on documentation!
 Still TO DO:
@@ -12,6 +12,49 @@ Still TO DO:
 - compiled version for download? /makefile?
 - summary file throw warning if there are non ATGCN bp in the sequences
 
+
+######################################################################
+
+## What's in the repository
+
+### 2. The fasta package
+
+The fasta package is designed to represent Fasta files and sequence data, and provide a suite of functions for reading, writing and manipulating Fasta sequence files. This library can be imported into other go projects to allow for simplified use and creation of Fasta files. 
+Importing this library provides the following specalized data structures and methods:
+
+
+type `Seq`
+
+type `Fasta`
+
+func ParseFasta(fasta_entry string)
+
+func Read(filename string)
+
+func (fa \*Fasta) Write(filename)
+
+func (fa \*Fasta) Sort()
+
+func Query(accession)
+
+func QueryToFile(accession []string, output string)
+
+type summaryDat struct {
+	name   string
+	length int
+	gc     float64
+}
+
+func (fa Fasta) Summary()
+
+func (fa Fasta) WriteSummary(filename)
+
+types which represent a Fasta file and individual sequence records, along with corresponding functions to 
+
+
+
+
+######################################################################
 
 
 goal:
@@ -31,22 +74,6 @@ from cmd line:
 	of nucleotides
 - summary, get an output .csv file with the names of all the fasta sequences in a file
 	the length and GC content of each.
-
-for the fasta package:
-- fasta.ParseFasta()
-- fasta.Read()
-- fasta.Write()
-- fasta.Query()
-- fasta.QueryToFile()
-- fasta.Merge()
-- fasta.Split()
-- fasta.Sort() - take multiple sequences in a fasta.File struct and sort them
-- fasta.Summary() - get a summary table with GC count and nucleotide count for all sequences in a file
-- fasta.WriteSummary()
-
-- special fasta.Seq and fasta.Fasta structures.
-- sequences are
-
 
 
 
