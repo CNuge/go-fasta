@@ -4,7 +4,6 @@
 package fasta
 
 import(
-	"fmt"
 	"sort"
 	)
 

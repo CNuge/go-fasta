@@ -5,7 +5,6 @@ package fasta
 
 import (
 	"fmt"
-	"io"
 	"os"
 )
 
