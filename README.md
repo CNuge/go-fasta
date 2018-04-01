@@ -13,6 +13,7 @@ TODO:
 - format all the files with go fmt
 - make the travis.yml file and have the build pass
 - compiled version for download? /makefile?
+- summary file throw warning if there are non ATGCN bp in the sequences
 
 
 
