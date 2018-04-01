@@ -21,7 +21,7 @@ func (sd summaryDat) String() string {
 
 // get the length of a seq
 func (sq Seq) len() int {
-	return len(sq.sequence)
+	return len(sq.Sequence)
 }
 
 // gc content of a seq
@@ -30,7 +30,7 @@ func (sq Seq) percGC() float64 {
 	gc := 0
 	// below we check to make sure the bases are ATGC
 	// to skip the N on the GC count
-	for _, base := range sq.sequence {
+	for _, base := range sq.Sequence {
 		if base == 'G' || base == 'C' {
 			bp++
 			gc++
@@ -46,8 +46,8 @@ func (sq Seq) percGC() float64 {
 func (fa Fasta) Summary() []summaryDat {
 	output := []summaryDat{}
 	// iterate through the entries in the fasta structure
-	for _, entry := range fa.entries {
-		data := summaryDat{entry.name, entry.len(), entry.percGC()}
+	for _, entry := range fa {
+		data := summaryDat{entry.Name, entry.len(), entry.percGC()}
 		output = append(output, data)
 	}
 	return output

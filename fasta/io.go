@@ -13,29 +13,29 @@ import (
 
 // represent a single sequence
 type Seq struct {
-	name     string
-	sequence string
+	Name     string
+	Sequence string
 }
 
 // the function to return the sequence in fasta format when printed
 func (sq Seq) String() string {
-	return fmt.Sprintf(">%v\n%v\n", sq.name, sq.sequence)
+	return fmt.Sprintf(">%v\n%v\n", sq.Name, sq.Sequence)
 }
 
 // print a sequence in fasta fmt with newline characters
 // after every 60 nucleotides
 func (sq Seq) fileString() string {
-	outstring := fmt.Sprintf(">%v\n", sq.name)
-	for i := 0; i <= len(sq.sequence); i = i + 60 {
+	outstring := fmt.Sprintf(">%v\n", sq.Name)
+	for i := 0; i <= len(sq.Sequence); i = i + 60 {
 		// check if we have reached the end of the sequence
 		var back int
-		if i+60 > len(sq.sequence) {
-			back = len(sq.sequence)
+		if i+60 > len(sq.Sequence) {
+			back = len(sq.Sequence)
 		} else {
 			back = i + 60
 		}
 
-		line := fmt.Sprintf("%v\n", sq.sequence[i:back])
+		line := fmt.Sprintf("%v\n", sq.Sequence[i:back])
 		outstring = fmt.Sprintf("%v%v", outstring, line)
 
 	}
@@ -43,22 +43,19 @@ func (sq Seq) fileString() string {
 }
 
 // represent a list of sequences as a Fasta
-type Fasta struct {
-	entries []Seq
-}
+type Fasta []Seq
 
 func (fa Fasta) String() string {
 	outstring := ""
-	for _, s := range fa.entries {
+	for _, s := range fa {
 		outstring = fmt.Sprintf("%v%v", outstring, s.String())
 	}
 	return outstring
 }
 
 // add a seq struct instance to the fasta struct
-func (fa *Fasta) AddItem(item Seq) []Seq {
-	fa.entries = append(fa.entries, item)
-	return fa.entries
+func (fa *Fasta) AddItem(item Seq) {
+	*fa = append(*fa, item)
 }
 
 // take a raw entry string from a fasta file and build a seq structure
@@ -66,8 +63,8 @@ func ParseFasta(fasta_entry string) Seq {
 	entry := strings.Split(fasta_entry, "\n")
 	// first position is the name,
 	// join everything but the first line into a single string
-	return Seq{name: entry[0],
-		sequence: strings.Join(entry[1:], "")}
+	return Seq{Name: entry[0],
+		Sequence: strings.Join(entry[1:], "")}
 }
 
 func Read(filename string) Fasta {
@@ -89,7 +86,7 @@ func Read(filename string) Fasta {
 	return fileseqs
 }
 
-func (fa *Fasta) Write(file ...string) {
+func (fa Fasta) Write(file ...string) {
 	filename := ""
 	// accepts filename, if none given makes it default
 	if len(file) > 0 {
@@ -104,7 +101,7 @@ func (fa *Fasta) Write(file ...string) {
 	}
 	defer f.Close()
 
-	for _, s := range fa.entries {
+	for _, s := range fa {
 		// get string with newlines and write to file
 		f.WriteString(s.fileString())
 	}

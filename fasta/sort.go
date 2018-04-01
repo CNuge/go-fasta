@@ -16,9 +16,9 @@ func (fa *Fasta) Sort() {
 
 	// value is a index in original entries struct,
 	// avoids moving the seq into intermediate structure
-	for i, s := range fa.entries {
-		fasta_dict[s.name] = i
-		name_list = append(name_list, s.name)
+	for i, s := range *fa {
+		fasta_dict[s.Name] = i
+		name_list = append(name_list, s.Name)
 	}
 
 	// quicksort of the keys (seq.name)
@@ -29,9 +29,10 @@ func (fa *Fasta) Sort() {
 	// append the original seq to the output in the correct order
 	for _, k := range name_list {
 		original_pos := fasta_dict[k]
-
-		out_fasta.AddItem(fa.entries[original_pos])
+		// below looks a little weird, 
+		// to slice from the original we need to call the value pointer
+		// wrapped in brackets (*fa)
+		out_fasta.AddItem((*fa)[original_pos])
 	}
-
 	*fa = out_fasta
 }
