@@ -4,6 +4,8 @@ package main
 import(
     "fmt"
 	"reflect"
+	"io/ioutil"
+	"log"
 	"strings"
 )
 
@@ -86,54 +88,57 @@ func (sd summaryDat) String() string {
 }
 
 
+func Read(filename string) Fasta {
+	fileseqs := Fasta{} // start an empty Fasta instance
+	//Opening a file
+	file, err := ioutil.ReadFile(filename)
+	// check if that caused an error
+	if err != nil {
+		log.Fatal(err)
+	}
+	// split the input file on the new seq characters
+	data := strings.Split(string(file), ">")
+	// the first position is empty because of the leading >
+	// so we iterate from 1:end and get the sequence
+	// here we parse the fasta and add it to the slice of seq
+	for _, entry := range data[1:] {
+		fileseqs.AddItem(ParseFasta(entry))
+	}
+	return fileseqs
+}
+
 func main() {
+	test_1 := Fasta{ []Seq{ Seq{ name:"SAC1",
+							sequence:"TGCATGTTGGAAACATGGCCCTGGCATATGTCTATCTTTCTCTCGGTCTCTAGGGCTAAGCTTCTCTTCCTTATATTTTT"},
+						Seq{ name:"SAC2",
+							sequence:"TGCATTACTTAGAGTGGTAGGTCAGTAGGGACGGTGCCTAACGTGTGAATCTCAAATGACACACAATTCCTTAAACATAGTACACGTC"},
+						Seq{ name:"SAC3",
+							sequence:"TGCATAAGGCTACCATCTAGGCGAACGTTATATTGGAATGGAATATGCAAGATCGGAAGAGCGGTTCAGCAGGACCGAGACC"},
+						Seq{ name:"SAC4",
+							sequence:"TGCATTAGGGGTGTGTGTGTGTGTGTGTGTGTGTGTTTGGTATGCAAGATCGGAAGAGCGGTTCAGCAGGAATGCCGAGACCATC"},
+						Seq{ name:"SAC5",
+							sequence:"TGCATGCTTTTCAGATTTTATTTTGTGTGGATCCCCATTGAGGCCTTTCCTCGCGTTCATCAGAAATGTATAGAGATGGCTTCCA"},
+						Seq{ name:"SAC6",
+							sequence:"TGCATTGATGCTAAATAGGGCCTCAGCTTGACAATTCATTCAAGTAACAAATGTTTGGATTCCTGATTTTGATTTTTTTTTCTTAACATTT"},
+						Seq{ name:"SAC7",
+							sequence:"TGCATTCCTACTTGGACACGTTACAGTAGATGTAACAACCCACTTTGTAAGCCTCATACTACCGACATGCGTAATTAGAAAAAGAGAGAGTTAAG"},
+						Seq{ name:"SAC8",
+							sequence:"TGCATGATTTTTCACCAGTACTTGAAAATGTGAATAAAACCGTAAATACGTTACGCTCCATACATGCAAGATCGGAAGAGCGGTT"},
+						Seq{ name:"SAC9",
+							sequence:"TGCATGTGTGTATACATATCTGTACTGTCTCGCTTGACAGGCTTACAGTGGCACTGGGAATGATACTTATGCCTGTAATGTGTTT"},
+						Seq{ name:"SAC10",
+							sequence:"TGCATTTAATCTTATCCGATAGGCGAAATCTAAATAGATAACTTTGGAAAAACTGGGCCCAGAGGCTTACTGAGGATTAAACTAC"},
+						}}
 
-	test_in := Fasta{entries : []Seq{	Seq{name: "test_seq1", 
-											sequence: "ATGCATGCATGC"},
-										Seq{name: "test_seq2", 
-											sequence: "ATATATATATATATATATATAAAAAGC"},
-										Seq{name: "test_seq3", 
-											sequence: "GCGCGCGCATGCGCGCGC"},
-										Seq{name: "test_seq4", 
-											sequence: "GGGCGGGCGGGCCC"},
-								}}
-
-	// Correct #s for test summary sequence
-	//test_seq1, len = 12, gc = .5
-	//test_seq2, len = 27, gc = .93
-	//test_seq3, len = 18, gc = .89
-	//test_seq4, len = 14, gc = 1.00
-	exp_output := []summaryDat{ summaryDat{ name : "test_seq1",
-											length : 12,
-											gc : 50.00} ,
-								summaryDat{ name : "test_seq2",
-											length : 27,
-											gc : 7.41} ,
-								summaryDat{ name : "test_seq3",
-											length : 18,
-											gc : 88.89} ,
-								summaryDat{ name : "test_seq4",
-											length : 14,
-											gc : 100.00}}
+	ex_file := "./example_data/example1.fasta"
 	
-	test_output := test_in.Summary()
+	test_in := Read(ex_file)
 
-	test_output_string := ""
-	for _ , i := range test_in.Summary(){
-		test_output_string = fmt.Sprintf("%v%v", test_output_string , i.String())
+	if reflect.DeepEqual(test_1, test_in) != true {
+		fmt.Printf("Test of fasta reader produced incorrect data. Received: %v\n", test_in)
 	}
+	fmt.Println(test_1)
+	fmt.Println(test_in)
 
-	exp_output_string := ""
-	for _ , i := range test_in.Summary(){
-		exp_output_string = fmt.Sprintf("%v%v", exp_output_string , i.String())
-	}
-
-	fmt.Println(exp_output)
-
-	fmt.Println(test_output)
-
-	if reflect.DeepEqual(test_output_string , exp_output_string) != true {
-		fmt.Printf("Summary of Fasta incorrect: %v\n want: %v.", test_output, exp_output)
-	}
 
 }
