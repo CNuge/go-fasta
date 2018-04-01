@@ -9,7 +9,7 @@ import (
 	"log"       // for logging errors
 	"os"
 	"strings"
-	)
+)
 
 // represent a single sequence
 type Seq struct {
@@ -41,7 +41,6 @@ func (sq Seq) fileString() string {
 	}
 	return outstring
 }
-
 
 // represent a list of sequences as a Fasta
 type Fasta struct {
@@ -90,7 +89,6 @@ func Read(filename string) Fasta {
 	return fileseqs
 }
 
-
 func (fa *Fasta) Write(file ...string) {
 	filename := ""
 	// accepts filename, if none given makes it default
@@ -111,5 +109,3 @@ func (fa *Fasta) Write(file ...string) {
 		f.WriteString(s.fileString())
 	}
 }
-
-

@@ -28,13 +28,13 @@ func (sq Seq) len() int {
 func (sq Seq) percGC() float64 {
 	bp := 0
 	gc := 0
-	// below we check to make sure the bases are ATGC 
+	// below we check to make sure the bases are ATGC
 	// to skip the N on the GC count
 	for _, base := range sq.sequence {
 		if base == 'G' || base == 'C' {
 			bp++
 			gc++
-		} else if base == 'A' || base == 'T'{
+		} else if base == 'A' || base == 'T' {
 			bp++
 		}
 
@@ -47,7 +47,7 @@ func (fa Fasta) Summary() []summaryDat {
 	output := []summaryDat{}
 	// iterate through the entries in the fasta structure
 	for _, entry := range fa.entries {
-		data := summaryDat{ entry.name, entry.len(), entry.percGC()}
+		data := summaryDat{entry.name, entry.len(), entry.percGC()}
 		output = append(output, data)
 	}
 	return output
@@ -56,7 +56,7 @@ func (fa Fasta) Summary() []summaryDat {
 // a wrapper function to write the output summary to a file
 func (fa Fasta) WriteSummary(file ...string) {
 	filename := ""
-	
+
 	if len(file) > 0 {
 		filename = file[0]
 	} else {

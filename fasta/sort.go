@@ -3,10 +3,9 @@
 
 package fasta
 
-import(
+import (
 	"sort"
-	)
-
+)
 
 // sort a Fasta by the seq names, modify it in place
 func (fa *Fasta) Sort() {
@@ -15,7 +14,7 @@ func (fa *Fasta) Sort() {
 	fasta_dict := make(map[string]int)
 	name_list := []string{}
 
-	// value is a index in original entries struct, 
+	// value is a index in original entries struct,
 	// avoids moving the seq into intermediate structure
 	for i, s := range fa.entries {
 		fasta_dict[s.name] = i
@@ -34,5 +33,5 @@ func (fa *Fasta) Sort() {
 		out_fasta.AddItem(fa.entries[original_pos])
 	}
 
-	*fa =  out_fasta
+	*fa = out_fasta
 }
