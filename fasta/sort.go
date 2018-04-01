@@ -29,7 +29,7 @@ func (fa *Fasta) Sort() {
 	// append the original seq to the output in the correct order
 	for _, k := range name_list {
 		original_pos := fasta_dict[k]
-		// below looks a little weird, 
+		// below looks a little weird,
 		// to slice from the original we need to call the value pointer
 		// wrapped in brackets (*fa)
 		out_fasta.AddItem((*fa)[original_pos])

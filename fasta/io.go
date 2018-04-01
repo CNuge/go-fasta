@@ -67,7 +67,6 @@ func (fa *Fasta) AddItem(item Seq) {
 	*fa = append(*fa, item)
 }
 
-
 func Read(filename string) Fasta {
 	fileseqs := Fasta{} // start an empty Fasta instance
 	//Opening a file

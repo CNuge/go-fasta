@@ -29,7 +29,7 @@ type `Seq`
 type `Fasta` 
 	a slice of Seq types []Seq
 
-func ParseFasta(fasta_entry string)
+func ParseSeq(fasta_entry string)
 
 func (fa \*Fasta) AddItem(item Seq)
 
