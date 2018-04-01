@@ -4,6 +4,18 @@
 ## merge, split, clean and utilize fasta files in other go programs.
 
 
+TODO:
+- unit tests for io file
+- documentation for the package in the proper idiomatic go fmt
+- test all of the cmd line functionality, make sure parallel parts work as expected
+- documentation for the repository. update the readme file
+- clean up and delete the unnecessary helper code
+- format all the files with go fmt
+- make the travis.yml file and have the build pass
+- compiled version for download? /makefile?
+
+
+
 goal:
 	have an executable file that can be compiled and used without a need to touch
 	the internals, and also a package that can be imported elsewhere and provide 
