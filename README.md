@@ -21,8 +21,13 @@ This program is controlled through a series of user specified command line optio
 * fasta file sorting
 This functionality is controlled by the following command line flags (example use cases given).
 
+<<<<<<< Updated upstream
 ### `-m` Merge Fasta files
 The merge flag takes a comma delimited list of fasta filenames to be merged. The final fasta will contain the sequences in the order of the .fasta inputs.
+=======
+### `-m` merge 
+Merge Fastas. The -m flage takes a comma delimited list of fasta filenames to be merged. The final fasta will contain the sequences in the order of the .fasta inputs.
+>>>>>>> Stashed changes
 You an also pass in a .txt filename which contains a list of filnames (all names specified on seprate lines).
 Use in conjunction with the -f flag to alter the output file name (default: output.fasta).
 
