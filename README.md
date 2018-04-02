@@ -27,7 +27,12 @@ You an also pass in a .txt filename which contains a list of filnames (all names
 Use in conjunction with the -f flag to alter the output file name (default: output.fasta).
 
 ```
-EXAMPLE CODE
+./go-fasta -m ./example_data/example1.fasta,./example_data/example2.fasta
+```
+
+Note below the use of a bulk read in. mention the fmt of the file, it must have the paths
+```
+./go-fasta -m ./example_data/filelist.txt -f test_out.fa
 ```
 
 ### `-n` Query NCBI. 

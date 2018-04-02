@@ -141,7 +141,7 @@ func mergeWorkFlow(merge_data string, file_data string, summary bool) {
 	}
 
 	// go call to write concurrent to summary
-	go output_fasta.Write(file_data)
+	output_fasta.Write(file_data)
 }
 
 // -n ncbi take accession numbers and query ncbi to build the fasta
@@ -152,10 +152,16 @@ func ncbiWorkflow(ncbi_data string, file_data string, summary bool) {
 	// otherwise, just pipe it straight to the file
 	if summary == true {
 		output_fasta := fasta.Query(accessions)
-		summary_name := getSummaryName(file_data)
+		
+		// add a waitgroup
 
-		go output_fasta.WriteSummary(summary_name)
-		go output_fasta.Write(file_data)
+		//put these two lines in a goroutine
+		summary_name := getSummaryName(file_data)
+		output_fasta.WriteSummary(summary_name)
+		// and this in another goroutine
+		output_fasta.Write(file_data)
+
+		// wait here for both to finish before exiting
 
 	} else {
 		fasta.QueryToFile(accessions, file_data)
@@ -172,9 +178,9 @@ func aplhaWorkflow(file_data string, summary bool) {
 	// otherwise, just pipe it straight to the file
 	if summary == true {
 		summary_name := getSummaryName(file_data)
-
-		go fasta_file.WriteSummary(summary_name)
-		go fasta_file.Write()
+		fmt.Println("making summary")
+		fasta_file.WriteSummary(summary_name)
+		fasta_file.Write()
 
 	} else {
 		fasta_file.Write()
@@ -242,7 +248,7 @@ func main() {
 		"gives the following information for each sequence in the fasta produced:\n"+
 		"sequence name\t sequence length\t percent gc content\n"+
 		"IMPORTANT NOTE: summary is designed for use with nucleotide based fasta files"+
-		"if you call it on a protein sequence fasta file the gc content column will be nonsense!")
+		" if you call it on a protein sequence fasta file the gc content column will be nonsense!")
 
 	filePtr := flag.String("f", "output.fasta", "File name. A .fasta or .txt filename.\n"+
 		"For use with -m -n -a -split and -summary flags to specify an output name.\n"+

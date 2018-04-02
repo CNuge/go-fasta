@@ -1,0 +1,3 @@
+./example_data/example1.fasta
+./example_data/example2.fasta
+./example_data/example3.fasta
