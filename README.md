@@ -21,10 +21,8 @@ This program is controlled through a series of user specified command line optio
 * fasta file sorting
 This functionality is controlled by the following command line flags (example use cases given).
 
-### `-m` merge 
-Takes a list of comma delimited file names (or a text file with a list of fasta file names) and merge them and write to -f or default name
-
-Merge Fastas. The -m flage takes a comma delimited list of fasta filenames to be merged. The final fasta will contain the sequences in the order of the .fasta inputs.
+### `-m` Merge Fasta files
+The merge flag takes a comma delimited list of fasta filenames to be merged. The final fasta will contain the sequences in the order of the .fasta inputs.
 You an also pass in a .txt filename which contains a list of filnames (all names specified on seprate lines).
 Use in conjunction with the -f flag to alter the output file name (default: output.fasta).
 
@@ -32,24 +30,23 @@ Use in conjunction with the -f flag to alter the output file name (default: outp
 EXAMPLE CODE
 ```
 
-### `-n` ncbi 
-Query NCBI. Takes a comma delimited list of unique NCBI IDs. The .fasta files associated with the accession IDs will be downloaded and saved to a .fasta file.
-You an also pass in a .txt filename which contains a list of IDs (all specified on seprate lines). 
+### `-n` Query NCBI. 
+This flag takes a comma delimited list of unique NCBI IDs. The .fasta files associated with the accession IDs will be downloaded and saved to a .fasta file. You can also pass in a .txt filename which contains a list of IDs (all specified on seprate lines). 
 Use in conjunction with the -f flag to alter the output file name. Note: this will run significantly faster if not called in conjunction with the -summary flag, as this requires the data to be stored in memory instead of written directly to the file.
 
 ```
 EXAMPLE CODE
 ```
 
-### `-a` alphabetize
-Alphabetize fasta. pass this flag name in conjunction with a -f flag. sequences in the -f specified file will be sorted alphabetically by sequence name.
+### `-a` Alphabetize Fasta
+Pass this flag name in conjunction with a -f flag. Sequences in the -f specified file will be sorted alphabetically by sequence name.
 
 ```
 EXAMPLE CODE
 ```
 
-### `-split` 
-Split Fasta. Pass this flag name in conjunction with a -f flag.
+### `-split` Split Fasta
+Pass this flag name in conjunction with a -f flag.
 The Sequences in the -f specified file will be split into a set of fasta files, one for each sequence in the file.
 
 ```
@@ -57,9 +54,8 @@ EXAMPLE CODE
 ```
 
 ### `-summary`
-Make a summary file of output. Pass this flag and a summary file will be constructed which
-gives the following information for each sequence in the fasta produced: 
-	sequence name	sequence length	percent gc content
+Make a summary file of output. Pass this flag and a summary file will be constructed whichgives the following information for each sequence in the fasta produced: 
+`	sequence name	sequence_length	percent_gc_content`
 IMPORTANT NOTE: summary is designed for use with nucleotide based fasta files, if you call it on a protein sequence fasta file the gc content column will be nonsense!
 
 ```
@@ -67,8 +63,8 @@ EXAMPLE CODE
 ```
 
 
-### `-f`
-File name. A .fasta or .txt filename. For use with -m -n -a -split and -summary flags to specify an output name.
+### `-f` File name.
+A .fasta or .txt filename. For use with -m -n -a -split and -summary flags to specify an output name.
 If both a fasta and summary are needed, just passed a .fasta name and it will produce a summary file with the same name and a .txt extension.
 
 ```
@@ -76,13 +72,11 @@ EXAMPLE CODE
 ```
 
 
-
 ## 2. The fasta package 
 * A copy of the fasta package's documentation is shown below. It can also be obtained using `godoc`, follwed by the path to the package (i.e. `godoc ./fasta`)
 
 The fasta package is designed to provide a suite of functions for reading, writing and manipulating Fasta sequence files. This library can be imported into other go projects to allow for simplified use and creation of Fasta files. The Query functions also provide the ability to retrieve new sequence data in fasta format from the National Center for Biotechnology Information (NCBI) databases by providing a slice of unique sequence ids.
 Importing this library provides the following specalized data structures and methods:
-
 
 #### type `Seq`
 * a struct with two fields, Name and Sequence to represent the two parts of a fasta file entry.
@@ -119,7 +113,6 @@ Importing this library provides the following specalized data structures and met
 #### func (fa Fasta) Summary()
 * This method should be used with nucleotide Fasta structures only. 
 * Calling this method will produce a slice of structs with three fields, corresponding to the name, length and percent GC content of the sequences in the Fasta
-
 
 #### func (fa Fasta) WriteSummary(filename)
 * This method has the same functionality as the Summary method, but instead of providing the output slice with the summary data in memory, it writes the summary directly to the file specified as a string in the method call.
