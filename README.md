@@ -34,9 +34,15 @@ EXAMPLE CODE
 This flag takes a comma delimited list of unique NCBI IDs. The .fasta files associated with the accession IDs will be downloaded and saved to a .fasta file. You can also pass in a .txt filename which contains a list of IDs (all specified on seprate lines). 
 Use in conjunction with the -f flag to alter the output file name. Note: this will run significantly faster if not called in conjunction with the -summary flag, as this requires the data to be stored in memory instead of written directly to the file.
 
+Query NCBI for the sequence associated with the unique accession ID 'AY646679.1'. Save this to a fasta file in the current working directory named 'custom_name.fasta'
 ```
-EXAMPLE CODE
+./go-fasta -n AY646679.1 -f custom_name.fasta
 ```
+Query NCBI for multiple accesion IDs at once. They will all be saved to the same file.
+```
+./go-fasta -n GL949779.1,GL949780.1 -f custom_name.fasta
+```
+
 
 ### `-a` Alphabetize Fasta
 Pass this flag name in conjunction with a -f flag. Sequences in the -f specified file will be sorted alphabetically by sequence name.
