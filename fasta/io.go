@@ -54,7 +54,7 @@ func (fa Fasta) String() string {
 }
 
 // take a raw entry string from a fasta file and build a seq structure
-func ParseSeq(fasta_entry string) Seq {
+func parseSeq(fasta_entry string) Seq {
 	entry := strings.Split(fasta_entry, "\n")
 	// first position is the name,
 	// join everything but the first line into a single string
@@ -81,7 +81,7 @@ func Read(filename string) Fasta {
 	// so we iterate from 1:end and get the sequence
 	// here we parse the fasta and add it to the slice of seq
 	for _, entry := range data[1:] {
-		fileseqs.AddItem(ParseSeq(entry))
+		fileseqs.AddItem(parseSeq(entry))
 	}
 	return fileseqs
 }

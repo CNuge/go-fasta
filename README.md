@@ -23,31 +23,48 @@ The fasta package is designed to represent Fasta files and sequence data, and pr
 Importing this library provides the following specalized data structures and methods:
 
 
+#### structures:
+
 type `Seq`
-	a struct with two files, .Name and .Sequence to represent the two parts of a fasta file entry.
+	a struct with two fields, Name and Sequence to represent the two parts of a fasta file entry.
 	When read in to the structure (via ParseFasta) the leading > is stripped from the name.
 type `Fasta` 
-	a slice of Seq types []Seq
-
-func ParseSeq(fasta_entry string)
-
-func (fa \*Fasta) AddItem(item Seq)
+	- a slice of Seq types []Seq
+	- This structure represents a fasta file for the library, it is a set of Seq structures.
+	- The library's input/output functionality allows for efficient reading and writing of files in standard fasta format
 
 func Read(filename string)
+	- This function takes one argument, a string specifying the name of a fasta file.
+	- The function returns an object of the type Fasta
+
+func (fa \*Fasta) AddItem(item Seq)
+	- This method can be called on an existing Fasta type. It takes one argument, specifying a new Seq structure to be added to the Fasta (this is useful for merging multiple Fasta files or adding newly obtained data to an existing Fasta)
+	- The Fasta will be modified in place (this is a pointer reciever method).
 
 func (fa Fasta) Write(filename)
+	- This method can be called on an existing Fasta type. It takes one argument, a filename (path optional) to which the Fasta will be written.
+	- The output is in standard Fasta format, with a header line prefaced by a '>' character and a sequence section with 60 characters of sequence per line.
 
 func (fa \*Fasta) Sort()
+	- This method can be called on a Fasta type instance to sort the underlying sequences alphabetically, by the Name fields of the constituent Seqs.
+	- The Fasta will be modified in place (this is a pointer reciever method).
 
 func Query(accession)
+	- This function takes a slice of strings as an argument, where each of the strings is an NCBI accession number. 
+	- It will query NCBI for these accession numbers, and return a Fasta type instance containing the a Seq struct corresponding to each of the accession numbers. 
 
 func QueryToFile(accession []string, output string)
+	- This function can be used in lieu of the Query function in instances where the data are not required in memory, they can then be written directly to a file (this is more efficient as the data does not need to be processed into the Fasta structure and the string can be written straight to the file).
+	- The function takes two argumens. The first argument is a slice of strings where each of the strings is an NCBI accession number. The second argument is a string containing the desired output file name to which the sequences obtained in the NCBI query will be written.
 
 func (fa Fasta) Summary()
+	- This method should be used with nucleotide Fasta structures only. 
+	- Calling this method will produce a slice of structs with three fields, corresponding to the name, length and percent GC content of the sequences in the Fasta
+
 
 func (fa Fasta) WriteSummary(filename)
+	- This method has the same functionality as the Summary method, but instead of providing the output slice with the summary data in memory, it writes the summary directly to the file specified as a string in the method call.
 
-types which represent a Fasta file and individual sequence records, along with corresponding functions to 
 
 
 

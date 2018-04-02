@@ -105,18 +105,6 @@ func readFastaToCh(filename string, ch chan fasta.Fasta, wg *sync.WaitGroup){
     wg.Done()
 }
 
-// this can be used to write multiple files to output in parallel
-// it is used as part of the -split module
-func parallelWrite( s fasta.Seq , wg *sync.WaitGroup){
-	// get name, sequence name + .fasta suffix
-	output_name := s.sequence + ".fasta"
-	// put the seq struct into a fasta.Fasta struct
-	output := fasta.Fasta{s}
-	// write the seq to the fasta file
-	output.Write(output_name)
-	// tell the waitgroup we are done
-	wg.Done()
-}
 
 // -m merge flag processing
 func mergeWorkFlow( merge_data string, file_data string, summary bool) {
@@ -200,6 +188,22 @@ func aplhaWorkflow(file_data string, summary bool) {
 }
 
 
+// this can be used to write multiple files to output in parallel
+// it is used as part of the -split module
+func parallelWrite( s fasta.Seq , wg *sync.WaitGroup){
+	// get name, sequence name + .fasta suffix
+	output_name := s.sequence + ".fasta"
+	// put the seq struct into a fasta.Fasta struct
+	output := fasta.Fasta{s}
+	// write the seq to the fasta file
+	output.Write(output_name)
+	// tell the waitgroup we are done
+	wg.Done()
+}
+
+
+//is the waitgroup needed here? or can we just let them race and
+// leave the program to finish up on its own?
 
 // -split take one input fasta and split it to one file for each sequence
 func splitWorkflow(file_data string, summary bool) {
