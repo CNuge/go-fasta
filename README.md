@@ -19,8 +19,9 @@ This program is controlled through a series of user specified command line optio
 * fasta file creation from NCBI query
 * fasta file summary
 * fasta file sorting
+This functionality is controlled by the following command line flags (example use cases given).
 
-### -m merge 
+### `-m` merge 
 Takes a list of comma delimited file names (or a text file with a list of fasta file names) and merge them and write to -f or default name
 
 Merge Fastas. The -m flage takes a comma delimited list of fasta filenames to be merged. The final fasta will contain the sequences in the order of the .fasta inputs.
@@ -31,7 +32,7 @@ Use in conjunction with the -f flag to alter the output file name (default: outp
 EXAMPLE CODE
 ```
 
-### -n ncbi 
+### `-n` ncbi 
 Query NCBI. Takes a comma delimited list of unique NCBI IDs. The .fasta files associated with the accession IDs will be downloaded and saved to a .fasta file.
 You an also pass in a .txt filename which contains a list of IDs (all specified on seprate lines). 
 Use in conjunction with the -f flag to alter the output file name. Note: this will run significantly faster if not called in conjunction with the -summary flag, as this requires the data to be stored in memory instead of written directly to the file.
@@ -40,14 +41,14 @@ Use in conjunction with the -f flag to alter the output file name. Note: this wi
 EXAMPLE CODE
 ```
 
-### -a alphabetize
+### `-a` alphabetize
 Alphabetize fasta. pass this flag name in conjunction with a -f flag. sequences in the -f specified file will be sorted alphabetically by sequence name.
 
 ```
 EXAMPLE CODE
 ```
 
-### -split 
+### `-split` 
 Split Fasta. Pass this flag name in conjunction with a -f flag.
 The Sequences in the -f specified file will be split into a set of fasta files, one for each sequence in the file.
 
@@ -55,7 +56,7 @@ The Sequences in the -f specified file will be split into a set of fasta files, 
 EXAMPLE CODE
 ```
 
-### -summary
+### `-summary`
 Make a summary file of output. Pass this flag and a summary file will be constructed which
 gives the following information for each sequence in the fasta produced: 
 	sequence name	sequence length	percent gc content
@@ -66,7 +67,7 @@ EXAMPLE CODE
 ```
 
 
-### -f
+### `-f`
 File name. A .fasta or .txt filename. For use with -m -n -a -split and -summary flags to specify an output name.
 If both a fasta and summary are needed, just passed a .fasta name and it will produce a summary file with the same name and a .txt extension.
 
