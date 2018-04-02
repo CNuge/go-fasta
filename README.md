@@ -22,19 +22,14 @@ Still TO DO:
 The fasta package is designed to represent Fasta files and sequence data, and provide a suite of functions for reading, writing and manipulating Fasta sequence files. This library can be imported into other go projects to allow for simplified use and creation of Fasta files. 
 Importing this library provides the following specalized data structures and methods:
 
-
-### structures:
-
 #### type `Seq`
+	* a struct with two fields, Name and Sequence to represent the two parts of a fasta file entry.
+	* When read in to the structure (via ParseFasta) the leading > is stripped from the name.
 
-	- a struct with two fields, Name and Sequence to represent the two parts of a fasta file entry.
-	- When read in to the structure (via ParseFasta) the leading > is stripped from the name.
-
-#### `type Fasta` 
-
-	- a slice of Seq types []Seq
-	- This structure represents a fasta file for the library, it is a set of Seq structures.
-	- The library's input/output functionality allows for efficient reading and writing of files in standard fasta format
+#### type `Fasta` 
+	* a slice of Seq types []Seq
+	* This structure represents a fasta file for the library, it is a set of Seq structures.
+	* The library's input/output functionality allows for efficient reading and writing of files in standard fasta format
 
 #### func Read(filename string)
 
