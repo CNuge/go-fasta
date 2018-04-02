@@ -23,8 +23,8 @@ The fasta package is designed to represent Fasta files and sequence data, and pr
 Importing this library provides the following specalized data structures and methods:
 
 #### type `Seq`
-	* a struct with two fields, Name and Sequence to represent the two parts of a fasta file entry.
-	* When read in to the structure (via ParseFasta) the leading > is stripped from the name.
+* a struct with two fields, Name and Sequence to represent the two parts of a fasta file entry.
+* When read in to the structure (via ParseFasta) the leading > is stripped from the name.
 
 #### type `Fasta` 
 	* a slice of Seq types []Seq
