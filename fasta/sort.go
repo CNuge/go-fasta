@@ -7,7 +7,8 @@ import (
 	"sort"
 )
 
-// sort a Fasta by the seq names, modify it in place
+// This method can be called on a Fasta type instance to sort the underlying sequences alphabetically, by the Name fields of the constituent Seqs.
+// The Fasta will be modified in place (this is a pointer reciever method).
 func (fa *Fasta) Sort() {
 	// make a dict where the keys are the sequence names
 	// and the values are a pointer to the seq structs

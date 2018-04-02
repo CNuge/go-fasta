@@ -48,7 +48,8 @@ func fastaFromQuery(raw_data string) Fasta {
 	return fileseqs
 }
 
-// take the query unique IDs and get string response
+// This function takes a slice of strings as an argument, where each of the strings is an NCBI accession number.
+// It will query NCBI for these accession numbers, and return a Fasta type instance containing the a Seq struct corresponding to each of the accession numbers.
 func Query(accession []string) Fasta {
 	//construct the url
 	query_url := buildURL(accession)
@@ -68,6 +69,12 @@ func Query(accession []string) Fasta {
 
 }
 
+// This function can be used in lieu of the Query function in instances where the data are not required 
+// in memory, they can then be written directly to a file (this is more efficient as the data does not 
+// need to be processed into the Fasta structure and the string can be written straight to the file).
+// The function takes two argumens. The first argument is a slice of strings where each of the strings 
+// is an NCBI accession number. The second argument is a string containing the desired output file name 
+// to which the sequences obtained in the NCBI query will be written.
 func QueryToFile(accession []string, output string) error {
 	// construct the url
 	query_url := buildURL(accession)

@@ -42,7 +42,9 @@ func (sq Seq) percGC() float64 {
 	return float64(gc) / float64(bp) * 100.0
 }
 
-// get an output slice containing the summaryDat for each of the sequences
+// This method should be used with nucleotide Fasta structures only.
+// Calling this method returns a slice of structs with three fields: 
+// the name, the length and the percent GC content of the sequences in the Fasta
 func (fa Fasta) Summary() []summaryDat {
 	output := []summaryDat{}
 	// iterate through the entries in the fasta structure
@@ -53,7 +55,9 @@ func (fa Fasta) Summary() []summaryDat {
 	return output
 }
 
-// a wrapper function to write the output summary to a file
+// This method has the same functionality as the Summary method, but instead of 
+// providing the output slice with the summary data in memory, it writes the summary 
+// directly to the file specified as a string in the method call.
 func (fa Fasta) WriteSummary(file ...string) {
 	filename := ""
 

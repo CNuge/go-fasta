@@ -1,3 +1,8 @@
+// The fasta package is designed to provide a suite of functions for reading, writing and manipulating Fasta sequence files. 
+// This library can be imported into other go projects to allow for simplified use and creation of Fasta files. 
+// The Query functions also provide the ability to retrieve new sequence data in fasta format from the 
+// National Center for Biotechnology Information (NCBI) databases by providing a slice of unique sequence ids.
+// Importing this library provides the following specalized data structures and methods:
 package fasta
 
 // contains code for seq and fasta structures
@@ -11,13 +16,13 @@ import (
 	"strings"
 )
 
-// represent a single sequence
+// A struct with two fields, Name and Sequence to represent the two parts of a fasta file entry.
 type Seq struct {
 	Name     string
 	Sequence string
 }
 
-// the function to return the sequence in fasta format when printed
+// return the sequence in fasta format when called
 func (sq Seq) String() string {
 	return fmt.Sprintf(">%v\n%v\n", sq.Name, sq.Sequence)
 }
@@ -42,9 +47,12 @@ func (sq Seq) fileString() string {
 	return outstring
 }
 
-// represent a list of sequences as a Fasta
+// A slice of Seq types []Seq
+// This structure represents a fasta file for the library, it is a set of Seq structures.
+// The library's input/output functionality allows for efficient reading and writing of files in standard fasta format
 type Fasta []Seq
 
+// Return the Fasta file in fasta format 
 func (fa Fasta) String() string {
 	outstring := ""
 	for _, s := range fa {
@@ -67,6 +75,8 @@ func (fa *Fasta) AddItem(item Seq) {
 	*fa = append(*fa, item)
 }
 
+// This function takes one argument, a string specifying the name of a fasta file. 
+// It returns an Fasta object with the sequence information from the file.
 func Read(filename string) Fasta {
 	fileseqs := Fasta{} // start an empty Fasta instance
 	//Opening a file
@@ -86,6 +96,8 @@ func Read(filename string) Fasta {
 	return fileseqs
 }
 
+// This method can be called on an existing Fasta type. It takes one argument, a filename (path optional) to which the Fasta will be written.
+// The output is in standard Fasta format, with a header line prefaced by a '>' character and a sequence section with 60 characters of sequence per line.
 func (fa Fasta) Write(file ...string) {
 	filename := ""
 	// accepts filename, if none given makes it default

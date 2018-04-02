@@ -17,14 +17,15 @@ Still TO DO:
 
 ## What is in the repository?
 
-## 2. The fasta package
+## 2. The fasta package 
+* Documentation is shown below, can also be called using `godoc` follwed by the path to the package (i.e. `godoc ./fasta`)
 
-The fasta package is designed to represent Fasta files and sequence data, and provide a suite of functions for reading, writing and manipulating Fasta sequence files. This library can be imported into other go projects to allow for simplified use and creation of Fasta files. 
+The fasta package is designed to provide a suite of functions for reading, writing and manipulating Fasta sequence files. This library can be imported into other go projects to allow for simplified use and creation of Fasta files. The Query functions also provide the ability to retrieve new sequence data in fasta format from the National Center for Biotechnology Information (NCBI) databases by providing a slice of unique sequence ids.
 Importing this library provides the following specalized data structures and methods:
+
 
 #### type `Seq`
 * a struct with two fields, Name and Sequence to represent the two parts of a fasta file entry.
-* When read in to the structure (via ParseFasta) the leading > is stripped from the name.
 
 #### type `Fasta` 
 * a slice of Seq types []Seq
