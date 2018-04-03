@@ -79,7 +79,9 @@ If both a fasta and summary are needed, just pass in a .fasta name and it will p
 
 
 ## 2. The fasta package 
-* A copy of the fasta package's documentation is shown below. It can also be obtained using `godoc`, follwed by the path to the package (i.e. `godoc ./fasta`)
+This package simplifies fasta file interaction within go. It can be imported other golang code using the command:
+```import "github.com/CNuge/go-fasta/fasta"```
+* A copy of the fasta package's documentation is shown below. It can also be obtained using `godoc`, follwed by the path to the package (i.e. `godoc ./fasta from this directory`)
 
 The fasta package is designed to provide a suite of functions for reading, writing and manipulating Fasta sequence files. This library can be imported into other go projects to allow for simplified use and creation of Fasta files. The Query functions also provide the ability to retrieve new sequence data in fasta format from the National Center for Biotechnology Information (NCBI) databases by providing a slice of unique sequence ids.
 Importing this library provides the following specalized data structures and methods:
