@@ -221,7 +221,7 @@ func aplhaWorkflow(file_data string, summary bool) {
 // it is used as part of the -split module
 func parallelWrite(s fasta.Seq, wg *sync.WaitGroup) {
 	// get name, sequence name + .fasta suffix
-	output_name := s.Sequence + ".fasta"
+	output_name := s.Name + ".fasta"
 	// put the seq struct into a fasta.Fasta struct
 	output := fasta.Fasta{s}
 	// write the seq to the fasta file
