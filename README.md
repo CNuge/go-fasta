@@ -2,6 +2,7 @@
 ## Command line based fasta housekeeping (merge, split, sort and summarize), also queries NCBI to obtain fasta files with sequence corresponding to given accession numbers.
 
 ## What is in the repository?
+This repository contains 1. the go-fasta program, and 2. the 'fasta' package, which can be imported and used within other go programs. These two components are discussed below (documentation provided).
 
 ## 1. go-fasta program 
 The go-fasta command line executable file provides the ability to efficiently execute common fasta file housekeeping tasks. The program uses concurrency to speed up process execution where possible. 
@@ -74,7 +75,6 @@ If for a given file you only wanted a summary, you could do the following:
 ### `-f` File name.
 A .fasta or .txt filename. For use with -m -n -a -split and -summary flags to specify an output name.
 If both a fasta and summary are needed, just pass in a .fasta name and it will produce a summary file with the same name and a .txt extension.
-
 
 
 ## 2. The fasta package 
