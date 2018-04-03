@@ -1,9 +1,11 @@
 language: go
 
 go:
-- tip # The latest version of Go.
+- 1.9 # The latest version of Go.
 
-script: go test -v
+script: 
+  - go test -v ./fasta
+  - go build
 
 notifications:
   email: false
