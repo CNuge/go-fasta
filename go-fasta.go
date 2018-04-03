@@ -202,10 +202,10 @@ func aplhaWorkflow(file_data string, summary bool) {
 		summary_name := getSummaryName(file_data)
 		fmt.Println("making summary")
 		fasta_file.WriteSummary(summary_name)
-		fasta_file.Write()
+		fasta_file.Write(file_data)
 
 	} else {
-		fasta_file.Write()
+		fasta_file.Write(file_data)
 	}
 }
 

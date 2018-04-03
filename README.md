@@ -52,8 +52,9 @@ Query NCBI for multiple accesion IDs at once. They will all be saved to the same
 ### `-a` Alphabetize Fasta
 Pass this flag name in conjunction with a -f flag. Sequences in the -f specified file will be sorted alphabetically by sequence name.
 
+# NOTE order goes SAC1, SAC10, SAC2..... need to get proper numeric ordering!
 ```
-EXAMPLE CODE
+./go-fasta -f ./example_data/example1-unsorted.fasta -a
 ```
 
 ### `-split` Split Fasta
@@ -66,11 +67,16 @@ EXAMPLE CODE
 
 ### `-summary`
 Make a summary file of output. Pass this flag and a summary file will be constructed whichgives the following information for each sequence in the fasta produced: 
-`	sequence name	sequence_length	percent_gc_content`
+`sequence name	sequence_length	percent_gc_content`
 IMPORTANT NOTE: summary is designed for use with nucleotide based fasta files, if you call it on a protein sequence fasta file the gc content column will be nonsense!
 
+To get a summary while performing another task, just add the summary flag at the end of the execution
 ```
-EXAMPLE CODE
+./go-fasta -m ./example_data/filelist.txt -f test_out.fa -summary
+```
+If for a given file you only wanted a summary, you could do the following:
+```
+./go-fasta -m ./example_data/example1.fasta -f ./example_data/example1.fasta -summary
 ```
 
 
@@ -78,9 +84,6 @@ EXAMPLE CODE
 A .fasta or .txt filename. For use with -m -n -a -split and -summary flags to specify an output name.
 If both a fasta and summary are needed, just passed a .fasta name and it will produce a summary file with the same name and a .txt extension.
 
-```
-EXAMPLE CODE
-```
 
 
 ## 2. The fasta package 
