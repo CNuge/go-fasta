@@ -3,7 +3,7 @@ package main
 // compile this, for use of the fasta package from a high level
 
 import (
-	"./fasta"
+	"github.com/CNuge/go-fasta/fasta"
 	"flag"
 	"fmt"
 	"io/ioutil"
