@@ -3,7 +3,7 @@ language: go
 go:
 - tip # The latest version of Go.
 
-script: go test ./...
+script: go test -v
 
 notifications:
   email: false
