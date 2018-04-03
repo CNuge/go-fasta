@@ -201,19 +201,19 @@ func aplhaWorkflow(file_data string, summary bool) {
 	// otherwise, just pipe it straight to the file
 	if summary == true {
 		wg.Add(1)
-		
+
 		go func() {
 			defer wg.Done()
 			summary_name := getSummaryName(file_data)
 			fasta_file.WriteSummary(summary_name)
 		}()
-	} 
+	}
 
 	go func() {
 		defer wg.Done()
 		fasta_file.Write(file_data)
 	}()
-	
+
 	wg.Wait()
 }
 
