@@ -8,7 +8,7 @@ This repository contains 1. the go-fasta program, and 2. the fasta go package, w
 ## 1. go-fasta program 
 The go-fasta command line executable file provides the ability to efficiently execute common fasta file housekeeping tasks. The program uses concurrency to speed up process execution where possible. 
 ### install
-To get the program up and running on your computer, download this repository and run the following commands ([you will need to have go installed!](https://golang.org/)): 
+To get the program up and running on your computer, download this repository and run the following commands ([you will need to have go installed](https://golang.org/) [and your gopath set up properly](https://github.com/golang/go/wiki/SettingGOPATH)): 
 ```
 go get github.com/CNuge/go-fasta
 go build go-fasta.go
@@ -27,12 +27,12 @@ You an also pass in a .txt filename which contains a list of filnames (all names
 Use in conjunction with the -f flag to alter the output file name (default: output.fasta).
 
 ```
-./go-fasta -m ./example_data/example1.fasta,./example_data/example2.fasta
+go-fasta -m ./example_data/example1.fasta,./example_data/example2.fasta
 ```
 
 Note below the use of a bulk read in. mention the fmt of the file, it must have the paths
 ```
-./go-fasta -m ./example_data/filelist.txt -f test_out.fa
+go-fasta -m ./example_data/filelist.txt -f test_out.fa
 ```
 
 ### `-n` Query NCBI. 
@@ -41,11 +41,11 @@ Use in conjunction with the -f flag to alter the output file name. Note: this wi
 
 Query NCBI for the sequence associated with the unique accession ID 'AY646679.1'. Save this to a fasta file in the current working directory named 'custom_name.fasta'
 ```
-./go-fasta -n AY646679.1 -f custom_name.fasta
+go-fasta -n AY646679.1 -f custom_name.fasta
 ```
 Query NCBI for multiple accesion IDs at once. They will all be saved to the same file. We also specify we want a summary file, which will be produced under the name 'custom_name.txt' and contain tab separated summary info (see the summary flag section).
 ```
-./go-fasta -n GL949779.1,GL949780.1 -f custom_name.fasta -summary
+go-fasta -n GL949779.1,GL949780.1 -f custom_name.fasta -summary
 ```
 
 
@@ -53,7 +53,7 @@ Query NCBI for multiple accesion IDs at once. They will all be saved to the same
 Pass this flag name in conjunction with a -f flag. Sequences in the -f specified file will be sorted alphabetically by sequence name.
 
 ```
-./go-fasta -f ./example_data/example1-unsorted.fasta -a
+go-fasta -f ./example_data/example1-unsorted.fasta -a
 ```
 
 ### `-split` Split Fasta
@@ -61,7 +61,7 @@ Pass this flag name in conjunction with a -f flag.
 The Sequences in the -f specified file will be split into a set of fasta files, one for each sequence in the file.
 
 ```
-EXAMPLE CODE
+go-fasta -f ./example_data/example1.fasta -split
 ```
 
 ### `-summary`
@@ -71,11 +71,11 @@ IMPORTANT NOTE: summary is designed for use with nucleotide based fasta files, i
 
 To get a summary while performing another task, just add the summary flag at the end of the execution
 ```
-./go-fasta -m ./example_data/filelist.txt -f test_out.fa -summary
+go-fasta -m ./example_data/filelist.txt -f test_out.fa -summary
 ```
 If for a given file you only wanted a summary, you could do the following:
 ```
-./go-fasta -m ./example_data/example1.fasta -f ./example_data/example1.fasta -summary
+go-fasta -m ./example_data/example1.fasta -f ./example_data/example1.fasta -summary
 ```
 
 
