@@ -7,8 +7,12 @@ This repository contains 1. the go-fasta program, and 2. the fasta go package, w
 
 ## 1. go-fasta program 
 The go-fasta command line executable file provides the ability to efficiently execute common fasta file housekeeping tasks. The program uses concurrency to speed up process execution where possible. 
-To get the program up and running on your computer, download this repository and run the command: `go build go-fasta.go`([you will need to have go installed!](https://golang.org/))
-
+### install
+To get the program up and running on your computer, download this repository and run the following commands ([you will need to have go installed!](https://golang.org/)): 
+```
+go get github.com/CNuge/go-fasta
+go build go-fasta.go
+```
 go-fasta is controlled through a series of user specified command line options which allow for:
 * fasta file merger (`-m`)
 * fasta file splitting (`-s`)
