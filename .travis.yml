@@ -5,7 +5,6 @@ go:
 
 script: 
   - go test ./fasta
-  - go build go-fasta.go
 
 notifications:
   email: false
