@@ -3,12 +3,9 @@
 
 # UNDER CONSTRUCTION - library works but I'm still working on documentation!
 Still TO DO:
-- test all of the cmd line functionality, make sure parallel parts work as expected
-- format all the files with go fmt
 - make the travis.yml file and have the build pass
-- compiled version for download? /makefile?
 - summary file throw warning if there are non ATGCN bp in the sequences
-
+- alphabetize order goes SAC1, SAC10, SAC2..... need to get proper numeric ordering!
 
 ## What is in the repository?
 
@@ -52,7 +49,6 @@ Query NCBI for multiple accesion IDs at once. They will all be saved to the same
 ### `-a` Alphabetize Fasta
 Pass this flag name in conjunction with a -f flag. Sequences in the -f specified file will be sorted alphabetically by sequence name.
 
-# NOTE order goes SAC1, SAC10, SAC2..... need to get proper numeric ordering!
 ```
 ./go-fasta -f ./example_data/example1-unsorted.fasta -a
 ```
