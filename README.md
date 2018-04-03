@@ -11,7 +11,7 @@ The go-fasta command line executable file provides the ability to efficiently ex
 To get the program up and running on your computer, download this repository and run the following commands ([you will need to have go installed](https://golang.org/) [and your gopath set up properly](https://github.com/golang/go/wiki/SettingGOPATH)): 
 ```
 go get github.com/CNuge/go-fasta
-go build go-fasta.go
+go install github.com/CNuge/go-fasta
 ```
 go-fasta is controlled through a series of user specified command line options which allow for:
 * fasta file merger (`-m`)
