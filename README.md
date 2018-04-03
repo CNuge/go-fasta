@@ -1,21 +1,16 @@
 # go-fasta
 ## Command line based fasta housekeeping (merge, split, sort and summarize), also queries NCBI to obtain fasta files with sequence corresponding to given accession numbers.
 
-# UNDER CONSTRUCTION - library works but I'm still working on documentation!
-Still TO DO:
-- make the travis.yml file and have the build pass
-- summary file throw warning if there are non ATGCN bp in the sequences
-- alphabetize order goes SAC1, SAC10, SAC2..... need to get proper numeric ordering!
-
 ## What is in the repository?
 
 ## 1. go-fasta program 
-This program is controlled through a series of user specified command line options which allow for:
-* fasta file merger
-* fasta file splitting
-* fasta file creation from NCBI query
-* fasta file summary
-* fasta file sorting
+The go-fasta command line executable file provides the ability to efficiently execute common fasta file housekeeping tasks. The program uses concurrency to speed up process execution where possible. 
+go-fasta is controlled through a series of user specified command line options which allow for:
+* fasta file merger (`-m`)
+* fasta file splitting (`-s`)
+* fasta file creation from NCBI query (`-n`)
+* fasta file summary (`-summary`)
+* fasta file sorting (`-a`)
 This functionality is controlled by the following command line flags (example use cases given).
 
 ### `-m` Merge Fasta files
