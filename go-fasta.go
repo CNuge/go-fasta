@@ -124,7 +124,7 @@ func mergeWorkFlow(merge_data string, file_data string, summary bool) {
 	}
 	// wait for everyone to finish
 	wg.Wait()
-	// close the channel so that we can
+	// close the channel so that we can use the data
 	close(ch)
 
 	// iterate through the channel data
@@ -134,14 +134,29 @@ func mergeWorkFlow(merge_data string, file_data string, summary bool) {
 		output_fasta = append(output_fasta, file_dat...)
 	}
 
+
+	// add a waitgroup
+	wg2 := sync.WaitGroup{}
+	wg2.Add(1)
+
 	// go call to summary
 	if summary == true {
-		summary_name := getSummaryName(file_data)
-		go output_fasta.WriteSummary(summary_name)
+		wg2.Add(1)
+
+		go func (){
+			defer wg2.Done()
+			summary_name := getSummaryName(file_data)
+			output_fasta.WriteSummary(summary_name)
+		}()
 	}
 
 	// go call to write concurrent to summary
 	output_fasta.Write(file_data)
+	go func (){
+			defer wg2.Done()			
+			output_fasta.Write(file_data)
+	}()
+	wg2.Wait()
 }
 
 // -n ncbi take accession numbers and query ncbi to build the fasta
@@ -154,14 +169,22 @@ func ncbiWorkflow(ncbi_data string, file_data string, summary bool) {
 		output_fasta := fasta.Query(accessions)
 		
 		// add a waitgroup
+		wg := sync.WaitGroup{}
+		wg.Add(2)
 
-		//put these two lines in a goroutine
-		summary_name := getSummaryName(file_data)
-		output_fasta.WriteSummary(summary_name)
-		// and this in another goroutine
-		output_fasta.Write(file_data)
+		go func (){
+			defer wg.Done()
+			summary_name := getSummaryName(file_data)
+			output_fasta.WriteSummary(summary_name)
+		}()
+
+		go func (){
+			defer wg.Done()			
+			output_fasta.Write(file_data)
+		}()
 
 		// wait here for both to finish before exiting
+		wg.Wait()
 
 	} else {
 		fasta.QueryToFile(accessions, file_data)

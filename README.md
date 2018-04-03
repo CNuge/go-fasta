@@ -43,9 +43,9 @@ Query NCBI for the sequence associated with the unique accession ID 'AY646679.1'
 ```
 ./go-fasta -n AY646679.1 -f custom_name.fasta
 ```
-Query NCBI for multiple accesion IDs at once. They will all be saved to the same file.
+Query NCBI for multiple accesion IDs at once. They will all be saved to the same file. We also specify we want a summary file, which will be produced under the name 'custom_name.txt' and contain tab separated summary info (see the summary flag section).
 ```
-./go-fasta -n GL949779.1,GL949780.1 -f custom_name.fasta
+./go-fasta -n GL949779.1,GL949780.1 -f custom_name.fasta -summary
 ```
 
 
