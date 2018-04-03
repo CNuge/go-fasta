@@ -3,8 +3,7 @@ language: go
 go:
 - tip # The latest version of Go.
 
-script:
--  go test ./fasta
+script: go test ./...
 
 notifications:
   email: false
