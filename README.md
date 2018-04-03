@@ -62,7 +62,7 @@ EXAMPLE CODE
 ```
 
 ### `-summary`
-Make a summary file of output. Pass this flag and a summary file will be constructed whichgives the following information for each sequence in the fasta produced: 
+Make a summary file of output. Pass this flag and a summary file will be constructed which gives the following information for each sequence in the fasta produced: 
 `sequence name	sequence_length	percent_gc_content`
 IMPORTANT NOTE: summary is designed for use with nucleotide based fasta files, if you call it on a protein sequence fasta file the gc content column will be nonsense!
 
@@ -78,7 +78,7 @@ If for a given file you only wanted a summary, you could do the following:
 
 ### `-f` File name.
 A .fasta or .txt filename. For use with -m -n -a -split and -summary flags to specify an output name.
-If both a fasta and summary are needed, just passed a .fasta name and it will produce a summary file with the same name and a .txt extension.
+If both a fasta and summary are needed, just pass in a .fasta name and it will produce a summary file with the same name and a .txt extension.
 
 
 
