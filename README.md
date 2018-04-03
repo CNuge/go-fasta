@@ -1,5 +1,5 @@
 # go-fasta
-## Command line based fasta housekeeping (merge, split, sort and summarize), also queries NCBI to obtain fasta files with sequence corresponding to given accession numbers.
+## Command line based fasta housekeeping (merge, split, sort and summarize)and NCBI queries via sequence identifiers.
 [![Build Status](https://travis-ci.org/CNuge/go-fasta.svg?branch=master)](https://travis-ci.org/CNuge/go-fasta)
 
 ## What is in the repository?
