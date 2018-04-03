@@ -150,7 +150,6 @@ func mergeWorkFlow(merge_data string, file_data string, summary bool) {
 	}
 
 	// go call to write concurrent to summary
-	output_fasta.Write(file_data)
 	go func() {
 		defer wg2.Done()
 		output_fasta.Write(file_data)
@@ -196,17 +195,26 @@ func aplhaWorkflow(file_data string, summary bool) {
 
 	fasta_file.Sort()
 
+	wg := sync.WaitGroup{}
+	wg.Add(1)
 	// need to hold the fasta in memory to do the summary
 	// otherwise, just pipe it straight to the file
 	if summary == true {
-		summary_name := getSummaryName(file_data)
-		fmt.Println("making summary")
-		fasta_file.WriteSummary(summary_name)
-		fasta_file.Write(file_data)
+		wg.Add(1)
+		
+		go func() {
+			defer wg.Done()
+			summary_name := getSummaryName(file_data)
+			fasta_file.WriteSummary(summary_name)
+		}()
+	} 
 
-	} else {
+	go func() {
+		defer wg.Done()
 		fasta_file.Write(file_data)
-	}
+	}()
+	
+	wg.Wait()
 }
 
 // this can be used to write multiple files to output in parallel
