@@ -43,11 +43,16 @@ Query NCBI for the sequence associated with the unique accession ID 'AY646679.1'
 ```
 go-fasta -n AY646679.1 -f custom_name.fasta
 ```
+
 Query NCBI for multiple accesion IDs at once. They will all be saved to the same file. We also specify we want a summary file, which will be produced under the name 'custom_name.txt' and contain tab separated summary info (see the summary flag section).
 ```
 go-fasta -n GL949779.1,GL949780.1 -f custom_name.fasta -summary
 ```
 
+You can also specify a file containing a list of multiple accession numbers (each on a separate line). The program will read the accession numbers in, and build a sinlge output with the sequence for all the passed ids.
+```
+go-fasta -n ./example_data/accessionlist.txt -f multi_test.fa
+```
 
 ### `-a` Alphabetize Fasta
 Pass this flag name in conjunction with a -f flag. Sequences in the -f specified file will be sorted alphabetically by sequence name.
@@ -86,7 +91,10 @@ If both a fasta and summary are needed, just pass in a .fasta name and it will p
 
 ## 2. The fasta package 
 This package simplifies fasta file interaction within go. It can be imported other golang code using the command:
-```import "github.com/CNuge/go-fasta/fasta"```
+```
+import "github.com/CNuge/go-fasta/fasta"
+```
+
 * A copy of the fasta package's documentation is shown below. It can also be obtained using `godoc`, follwed by the path to the package (i.e. `godoc ./fasta from this directory`)
 
 The fasta package is designed to provide a suite of functions for reading, writing and manipulating Fasta sequence files. This library can be imported into other go projects to allow for simplified use and creation of Fasta files. The Query functions also provide the ability to retrieve new sequence data in fasta format from the National Center for Biotechnology Information (NCBI) databases by providing a slice of unique sequence ids.
