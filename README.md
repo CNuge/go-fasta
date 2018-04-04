@@ -90,7 +90,7 @@ If both a fasta and summary are needed, just pass in a .fasta name and it will p
 
 
 ## 2. The fasta package 
-This package simplifies fasta file interaction within go. It can be imported other golang code using the command:
+This package simplifies fasta file interaction within go. After running `go get github.com/CNuge/go-fasta`, this package can be imported other golang code using the command:
 ```
 import "github.com/CNuge/go-fasta/fasta"
 ```
