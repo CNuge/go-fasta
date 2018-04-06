@@ -98,7 +98,7 @@ func TestSummary(t *testing.T) {
 		Seq{Name: "test_seq3",
 			Sequence: "GCGCGCGCATGCGCGCGC"},
 		Seq{Name: "test_seq4",
-			Sequence: "GGGCGGGCGGGCCC"},
+			Sequence: "IYMHIARGLYYGSY"},
 	}
 
 	exp_output := []summaryDat{summaryDat{name: "test_seq1",
@@ -106,13 +106,16 @@ func TestSummary(t *testing.T) {
 		gc:     50.00},
 		summaryDat{name: "test_seq2",
 			length: 27,
-			gc:     7.41},
+			gc:     7.41,
+			seqtype: "DNA"},
 		summaryDat{name: "test_seq3",
 			length: 18,
-			gc:     88.89},
+			gc:     88.89,
+			seqtype: "DNA"},
 		summaryDat{name: "test_seq4",
 			length: 14,
-			gc:     100.00}}
+			gc:     0.00,
+			seqtype: "AminoAcid"}}
 
 	test_output := test_in.Summary()
 

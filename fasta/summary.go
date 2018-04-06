@@ -12,11 +12,12 @@ type summaryDat struct {
 	name   string
 	length int
 	gc     float64
+	seqtype string
 }
 
 // represent the summary data structures for printing
 func (sd summaryDat) String() string {
-	return fmt.Sprintf("%v\t%v\t%.2f\n", sd.name, sd.length, sd.gc)
+	return fmt.Sprintf("%v\t%v\t%.2f\t%v\n", sd.name, sd.length, sd.gc, sd.seqtype)
 }
 
 // get the length of a seq
@@ -24,10 +25,12 @@ func (sq Seq) len() int {
 	return len(sq.Sequence)
 }
 
-// gc content of a seq
-func (sq Seq) percGC() float64 {
+
+// gc content of a seq and whether it is an amino acid or nucleotide sequence
+func (sq Seq) percGCandSeqType() (float64, string) {
 	bp := 0
 	gc := 0
+	string_type := "DNA"
 	// below we check to make sure the bases are ATGC
 	// to skip the N on the GC count
 	for _, base := range sq.Sequence {
@@ -36,9 +39,12 @@ func (sq Seq) percGC() float64 {
 			gc++
 		} else if base == 'A' || base == 'T' {
 			bp++
+		} else if base != 'N' {
+			return 0.0, "AminoAcid"
 		}
-		
-	return float64(gc) / float64(bp) * 100.0
+	}
+
+	return (float64(gc) / float64(bp) * 100.0), string_type
 }
 
 // This method should be used with nucleotide Fasta structures only.
@@ -48,7 +54,9 @@ func (fa Fasta) Summary() []summaryDat {
 	output := []summaryDat{}
 	// iterate through the entries in the fasta structure
 	for _, entry := range fa {
-		data := summaryDat{entry.Name, entry.len(), entry.percGC()}
+		seq_len := entry.len()
+		seq_gc , seq_type := entry.percGCandSeqType()
+		data := summaryDat{entry.Name, seq_len ,seq_gc, seq_type}
 		output = append(output, data)
 	}
 	return output
