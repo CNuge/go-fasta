@@ -28,7 +28,6 @@ func (sq Seq) len() int {
 func (sq Seq) percGC() float64 {
 	bp := 0
 	gc := 0
-	warning := false
 	// below we check to make sure the bases are ATGC
 	// to skip the N on the GC count
 	for _, base := range sq.Sequence {
@@ -37,16 +36,8 @@ func (sq Seq) percGC() float64 {
 			gc++
 		} else if base == 'A' || base == 'T' {
 			bp++
-		}else if base != 'N' && warning == false {
-			warning = true
 		}
-	}
-
-	if warning == true {
-		fmt.Printf("Warning! The fasta file entry: %v appears to have non-nucleotide sequence.\n Ignore the Perc_GC content in the summary file!\n", sq.Name )
-		return 0.0
-	}
-	
+		
 	return float64(gc) / float64(bp) * 100.0
 }
 
