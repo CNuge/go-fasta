@@ -36,9 +36,16 @@ func (sq Seq) percGC() float64 {
 			gc++
 		} else if base == 'A' || base == 'T' {
 			bp++
+		}else if base != 'N' && warning == false {
+			warning = true
 		}
-
 	}
+
+	if warning == true {
+		fmt.Printf("Warning! The fasta file entry: %v appears to have non-nucleotide sequence.\n Ignore the Perc_GC content in the summary file!\n", sq.Name )
+		return 0.0
+	}
+	
 	return float64(gc) / float64(bp) * 100.0
 }
 
