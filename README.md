@@ -71,8 +71,8 @@ go-fasta -f ./example_data/example1.fasta -split
 
 ### `-summary`
 Make a summary file of output. Pass this flag and a summary file will be constructed which gives the following information for each sequence in the fasta produced: 
-`sequence name	sequence_length	percent_gc_content`
-IMPORTANT NOTE: summary is designed for use with nucleotide based fasta files, if you call it on a protein sequence fasta file the gc content column will be nonsense!
+`sequence name	sequence_length	percent_gc_content sequence_type`
+IMPORTANT NOTE: summary is designed for use with nucleotide based fasta files, if you call it on a protein sequence the gc content column be 0.00 and the sequence_type column will flag the sequence as an amino acid!
 
 To get a summary while performing another task, just add the summary flag at the end of the execution
 ```
