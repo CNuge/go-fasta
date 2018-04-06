@@ -28,6 +28,7 @@ func (sq Seq) len() int {
 func (sq Seq) percGC() float64 {
 	bp := 0
 	gc := 0
+	warning := false
 	// below we check to make sure the bases are ATGC
 	// to skip the N on the GC count
 	for _, base := range sq.Sequence {
