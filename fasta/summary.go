@@ -9,9 +9,9 @@ import (
 )
 
 type summaryDat struct {
-	name   string
-	length int
-	gc     float64
+	name    string
+	length  int
+	gc      float64
 	seqtype string
 }
 
@@ -24,7 +24,6 @@ func (sd summaryDat) String() string {
 func (sq Seq) len() int {
 	return len(sq.Sequence)
 }
-
 
 // gc content of a seq and whether it is an amino acid or nucleotide sequence
 func (sq Seq) percGCandSeqType() (float64, string) {
@@ -48,22 +47,22 @@ func (sq Seq) percGCandSeqType() (float64, string) {
 }
 
 // This method should be used with nucleotide Fasta structures only.
-// Calling this method returns a slice of structs with three fields: 
+// Calling this method returns a slice of structs with three fields:
 // the name, the length and the percent GC content of the sequences in the Fasta
 func (fa Fasta) Summary() []summaryDat {
 	output := []summaryDat{}
 	// iterate through the entries in the fasta structure
 	for _, entry := range fa {
 		seq_len := entry.len()
-		seq_gc , seq_type := entry.percGCandSeqType()
-		data := summaryDat{entry.Name, seq_len ,seq_gc, seq_type}
+		seq_gc, seq_type := entry.percGCandSeqType()
+		data := summaryDat{entry.Name, seq_len, seq_gc, seq_type}
 		output = append(output, data)
 	}
 	return output
 }
 
-// This method has the same functionality as the Summary method, but instead of 
-// providing the output slice with the summary data in memory, it writes the summary 
+// This method has the same functionality as the Summary method, but instead of
+// providing the output slice with the summary data in memory, it writes the summary
 // directly to the file specified as a string in the method call.
 func (fa Fasta) WriteSummary(file ...string) {
 	filename := ""

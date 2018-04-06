@@ -105,16 +105,16 @@ func TestSummary(t *testing.T) {
 		length: 12,
 		gc:     50.00},
 		summaryDat{name: "test_seq2",
-			length: 27,
-			gc:     7.41,
+			length:  27,
+			gc:      7.41,
 			seqtype: "DNA"},
 		summaryDat{name: "test_seq3",
-			length: 18,
-			gc:     88.89,
+			length:  18,
+			gc:      88.89,
 			seqtype: "DNA"},
 		summaryDat{name: "test_seq4",
-			length: 14,
-			gc:     0.00,
+			length:  14,
+			gc:      0.00,
 			seqtype: "AminoAcid"}}
 
 	test_output := test_in.Summary()

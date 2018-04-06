@@ -69,11 +69,11 @@ func Query(accession []string) Fasta {
 
 }
 
-// This function can be used in lieu of the Query function in instances where the data are not required 
-// in memory, they can then be written directly to a file (this is more efficient as the data does not 
+// This function can be used in lieu of the Query function in instances where the data are not required
+// in memory, they can then be written directly to a file (this is more efficient as the data does not
 // need to be processed into the Fasta structure and the string can be written straight to the file).
-// The function takes two argumens. The first argument is a slice of strings where each of the strings 
-// is an NCBI accession number. The second argument is a string containing the desired output file name 
+// The function takes two argumens. The first argument is a slice of strings where each of the strings
+// is an NCBI accession number. The second argument is a string containing the desired output file name
 // to which the sequences obtained in the NCBI query will be written.
 func QueryToFile(accession []string, output string) error {
 	// construct the url
