@@ -30,7 +30,7 @@ Use in conjunction with the -f flag to alter the output file name (default: outp
 go-fasta -m ./example_data/example1.fasta,./example_data/example2.fasta
 ```
 
-Note below the use of a bulk read in. mention the fmt of the file, it must have the paths
+Note below the use of a bulk read in. The file contains a list of fasta files, each listed on a separate line. In a case where you are using files not in your current directory, you will need to specify the full path to each of the files.
 ```
 go-fasta -m ./example_data/filelist.txt -f test_out.fa
 ```
