@@ -7,7 +7,7 @@
 This repository contains 1. the go-fasta program, and 2. the fasta go package, which can be imported and used within other go programs. These two components are discussed below (documentation provided).
 
 ## 1. go-fasta program 
-The go-fasta command line executable file provides the ability to efficiently execute common fasta file housekeeping tasks. The program uses concurrency to speed up process execution where possible. 
+The go-fasta command line executable provides the ability to efficiently execute common fasta file housekeeping tasks. The program uses concurrency to speed up execution where possible. 
 ### install
 To get the program up and running on your computer, download this repository and run the following commands ([you will need to have go installed](https://golang.org/) [and your gopath set up properly](https://github.com/golang/go/wiki/SettingGOPATH)): 
 ```
@@ -17,7 +17,7 @@ go install github.com/CNuge/go-fasta
 go-fasta is controlled through a series of user specified command line options which allow for:
 * fasta file merger (`-m`)
 * fasta file splitting (`-s`)
-* fasta file creation from NCBI query (`-n`)
+* fasta file retrieval from NCBI (`-n`)
 * fasta file summary (`-summary`)
 * fasta file sorting (`-a`)
 This functionality is controlled by the following command line flags (example use cases given).
@@ -56,15 +56,15 @@ go-fasta -n ./example_data/accessionlist.txt -f multi_test.fa
 ```
 
 ### `-a` Alphabetize Fasta
-Pass this flag name in conjunction with a -f flag. Sequences in the -f specified file will be sorted alphabetically by sequence name.
+Pass this flag in conjunction with an `-f` flag. Sequences in the file specified by the `-f` flag will be sorted alphabetically by sequence name.
 
 ```
 go-fasta -f ./example_data/example1-unsorted.fasta -a
 ```
 
 ### `-split` Split Fasta
-Pass this flag name in conjunction with a -f flag.
-The Sequences in the -f specified file will be split into a set of fasta files, one for each sequence in the file.
+Pass this flag name in conjunction with an `-f` flag.
+The Sequences in the file specified by the `-f` flag will be split into a set of fasta files, one for each sequence in the file.
 
 ```
 go-fasta -f ./example_data/example1.fasta -split
