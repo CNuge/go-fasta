@@ -23,12 +23,12 @@ go-fasta is controlled through a series of user specified command line options w
 This functionality is controlled by the following command line flags (example use cases given).
 
 ### `-m` Merge Fasta files
-The merge flag takes a comma delimited list of fasta filenames to be merged. The final fasta will contain the sequences in the order of the .fasta inputs.
-You an also pass in a .txt filename which contains a list of filnames (all names specified on seprate lines).
+The merge flag takes a space delimited list of fasta filenames surrounded by quotes. The final fasta will contain the sequences in the order of the .fasta inputs.
+You an also pass in a .txt filename which contains a list of filnames (each file name specified on a seprate line).
 Use in conjunction with the -f flag to alter the output file name (default: output.fasta).
 
 ```
-go-fasta -m ./example_data/example1.fasta,./example_data/example2.fasta
+go-fasta -m "./example_data/example1.fasta ./example_data/example2.fasta"
 ```
 
 Note below the use of a bulk read in. The file contains a list of fasta files, each listed on a separate line. In a case where you are using files not in your current directory, you will need to specify the full path to each of the files.
@@ -37,7 +37,7 @@ go-fasta -m ./example_data/filelist.txt -f test_out.fa
 ```
 
 ### `-n` Query NCBI. 
-This flag takes a comma delimited list of unique NCBI IDs. The .fasta files associated with the accession IDs will be downloaded and saved to a .fasta file. You can also pass in a .txt filename which contains a list of IDs (all specified on seprate lines). 
+This flag takes a single NCBI ID, or space delimited list of unique NCBI IDs surrounded by quotes. The .fasta files associated with the accession IDs will be downloaded and saved to a .fasta file. You can also pass in a .txt filename which contains a list of IDs (each ID specified on a seprate line). 
 Use in conjunction with the -f flag to alter the output file name. Note: this will run significantly faster if not called in conjunction with the -summary flag, as this requires the data to be stored in memory instead of written directly to the file.
 
 Query NCBI for the sequence associated with the unique accession ID 'AY646679.1'. Save this to a fasta file in the current working directory named 'custom_name.fasta'
@@ -47,7 +47,7 @@ go-fasta -n AY646679.1 -f custom_name.fasta
 
 Query NCBI for multiple accesion IDs at once. They will all be saved to the same file. We also specify we want a summary file, which will be produced under the name 'custom_name.txt' and contain tab separated summary info (see the summary flag section).
 ```
-go-fasta -n GL949779.1,GL949780.1 -f custom_name.fasta -summary
+go-fasta -n "GL949779.1 GL949780.1" -f custom_name.fasta -summary
 ```
 
 You can also specify a file containing a list of multiple accession numbers (each on a separate line). The program will read the accession numbers in, and build a sinlge output with the sequence for all the passed ids.
