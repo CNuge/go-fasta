@@ -13,7 +13,7 @@ import (
 )
 
 func parseFlagData(flagDat string) []string {
-	flag_input := strings.Split(flagDat, ",") //split on commas
+	flag_input := strings.Split(flagDat, " ") //split on spaces
 	return flag_input
 }
 
@@ -258,27 +258,33 @@ func splitWorkflow(file_data string, summary bool) {
 
 func main() {
 
-	mergePtr := flag.String("m", "__none__", "Merge Fastas. A comma delimited list of fasta filenames to be merged.\n"+
-		"The final fasta will contain the sequences in the order of the .fasta inputs.\n"+
-		"You an also pass in a .txt filename which contains a list of filnames (all names specified on seprate lines).\n"+
-		"Use in conjunction with the -f flag to alter the output file name.")
+	mergePtr := flag.String("m", "__none__", "Merge Fastas. A space delimited list of fasta filenames, surrounded by quotes i.e.:\n"+
+		"go-fasta -m \"file1.fasta file2.fasta file3.fasta\" -f output_name.fasta \n"+
+		"The output will contain the sequences in the order of the input arguments.\n"+
+		"You an also pass in a .txt filename which contains a list of filenames (each names specified on seprate lines). i.e.:\n"+
+		"go-fasta -m fasta_file_index.txt -f output_name.fasta \n"+
+		"Use in conjunction with the -f flag to alter the output file name (default name: output.fasta).\n\n")
 
-	ncbiPtr := flag.String("n", "__none__", "Query NCBI. A comma delimited list of unique NCBI IDs.\n"+
+	ncbiPtr := flag.String("n", "__none__", "Query NCBI. A space delimited list of fasta filenames, surrounded by quotes. i.e.:\n"+
+		"go-fasta -n \"GL949779.1 GL949780.1\" -f output_name.fasta \n"+
 		"The .fasta files associated with the accession IDs will be downloaded and saved to a .fasta file.\n"+
-		"You an also pass in a .txt filename which contains a list of IDs (all specified on seprate lines).\n"+
-		"Use in conjunction with the -f flag to alter the output file name.")
+		"You an also pass in a .txt filename which contains a list of IDs (each accession specified on a seprate line). i.e.:\n"+
+		"go-fasta -n accessionlist.txt -f multi_test.fa\n"+
+		"Use in conjunction with the -f flag to alter the output file name (default name: output.fasta).\n\n")
 
 	alphaPtr := flag.Bool("a", false, "Alphabetize Fasta. Pass this flag name in conjunction with a -f flag.\n"+
-		"Sequences in the -f specified file will be sorted alphabetically by sequence name.\n")
+		"Sequences in the -f specified file will be sorted alphabetically by sequence name. i.e.:\n"+
+		"go-fasta -f example1-unsorted.fasta -a \n\n")
 
 	splitPtr := flag.Bool("split", false, "Split Fasta. Pass this flag name in conjunction with a -f flag.\n"+
-		"The Sequences in the -f specified file will be split into a set of fasta files, one for each sequence in the file.\n")
+		"The Sequences in the -f specified file will be split into a set of fasta files, one for each sequence in the file. i.e.:\n"+
+		"go-fasta -f example1.fasta -split\n\n")
 
 	summaryPtr := flag.Bool("summary", false, "Make a summary file of output. Pass this flag and a summary file will be constructed which\n"+
 		"gives the following information for each sequence in the fasta produced:\n"+
-		"sequence name\t sequence length\t percent gc content\n"+
+		"sequence name\tsequence_length\tpercent_gc_content\tsequence_type\n"+
 		"IMPORTANT NOTE: summary is designed for use with nucleotide based fasta files"+
-		" if you call it on a protein sequence fasta file the gc content column will be nonsense!")
+		"if you call it on a fasta file containting protein sequence, the gc content column will be filled with 0\n\n")
 
 	filePtr := flag.String("f", "output.fasta", "File name. A .fasta or .txt filename.\n"+
 		"For use with -m -n -a -split and -summary flags to specify an output name.\n"+
