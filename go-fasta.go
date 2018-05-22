@@ -48,7 +48,7 @@ func parseFastaFlags(flagDat string) []string {
 		} else if i[len(i)-6:] == ".fasta" || i[len(i)-3:] == ".fa" {
 			fasta_files = append(fasta_files, i)
 		} else {
-			err := fmt.Errorf("You have passed an filname to -m that does not have a .txt, .fasta or .fa extension.\n")
+			err := fmt.Errorf("You have passed a filename to -m that does not have a .txt, .fasta or .fa extension.\n")
 			log.Fatal(err)
 		}
 	}
