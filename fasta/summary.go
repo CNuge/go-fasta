@@ -29,7 +29,6 @@ func (sq Seq) len() int {
 func (sq Seq) percGCandSeqType() (float64, string) {
 	bp := 0
 	gc := 0
-	string_type := "DNA"
 	// below we check to make sure the bases are ATGC
 	// to skip the N on the GC count
 	for _, base := range sq.Sequence {
@@ -43,7 +42,7 @@ func (sq Seq) percGCandSeqType() (float64, string) {
 		}
 	}
 
-	return (float64(gc) / float64(bp) * 100.0), string_type
+	return (float64(gc) / float64(bp) * 100.0), "DNA"
 }
 
 // This method should be used with nucleotide Fasta structures only.
