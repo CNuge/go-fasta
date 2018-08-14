@@ -230,8 +230,6 @@ func parallelWrite(s fasta.Seq, wg *sync.WaitGroup) {
 	wg.Done()
 }
 
-//is the waitgroup needed here? or can we just let them race and
-// leave the program to finish up on its own?
 
 // -split take one input fasta and split it to one file for each sequence
 func splitWorkflow(file_data string, summary bool) {
