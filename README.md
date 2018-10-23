@@ -16,10 +16,10 @@ go install github.com/CNuge/go-fasta
 ```
 go-fasta is controlled through a series of user specified command line options which allow for:
 * fasta file merger (`-m`)
-* fasta file splitting (`-s`)
+* fasta file splitting (`-split`)
 * fasta file download from NCBI (`-n`)
 * fasta file summary (`-summary`)
-* fasta file sorting (`-a`)
+* fasta file alphabetical sorting (`-a`)
 This functionality is controlled by the following command line flags (example use cases given).
 
 ### `-m` Merge Fasta files
